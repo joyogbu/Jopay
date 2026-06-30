@@ -2,7 +2,7 @@ import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 //import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { config } from './Config.jsx';
+import { config } from './config/Config.jsx';
 
 
 import { BrowserRouter } from 'react-router-dom'

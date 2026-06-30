@@ -1,6 +1,6 @@
 import { useAccount, useConnect, useDisconnect, useSwitchChain } from 'wagmi';
 import { injected } from 'wagmi/connectors';
-import {arcTestnet} from '../arcTestnet.jsx';
+import {arcTestnet} from '../config/arcTestnet.jsx';
 import {baseSepolia} from 'wagmi/chains';
 
 //function ConnectWallet() {
@@ -41,7 +41,7 @@ function ConnectWallet() {
 	}
         return (
 		<div className="modal_overlay">
-			<div className="modal_box">
+			<div className="connect_wallet_modal">
 				<h1>Welcome to JoPay</h1>
 				<p>Thank you for verifying your email address. please connect your wallet</p>
 				<button id="wallet_connect" onClick= { handleConnect }>Connect Wallet</button>

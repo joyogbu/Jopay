@@ -9,29 +9,87 @@
 }
 
 #landing_div {
-	text-align:center;
+	/*text-align:center*/
 
 }
 
+.landing_menu_div {
+	border: 2px solid none;
+	height:40px;	
+}
+
+
+.landing_menu {
+	float:left;
+	width:50%;
+}
+
+.landing_logo {
+	padding-left:5%;
+}
+
+.landing_logo_img {
+	width: 40%;
+}
+
+.landing_menu_bar {
+	border:1px solid none;
+	margin-top:15px;
+	
+	text-align:right;
+}
+
+.landing_menu_btn {
+	border:none;
+	background:none;
+	font-size:24px;
+}
+
 #landing_one {
-	background:black;
+	background:CornFlowerBlue;
+	/*background-image:url('images/image_back.jpeg');*/
 	color:white;
 	text-align:center;
 	padding:10%;
+	/*background-size:cover;
+	background-position:center;*/
+}
+
+.text_change {
+	color:burlywood;
+	
 }
 
 #landing_two {
 	border:1px solid none;
 	padding:10%;
+	text-align:center;
+	background:lightblue;
+}
+
+.landing_two_intro {
+	border-top:1px solid lightgrey;
+	border-bottom:1px solid lightgrey;
+	/*background:yellow;
+	background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('images/image4.png');
+	background-position:left;
+	background-size:cover;*/
+	text-align:center;
+	padding:10%;
+	margin:10%;
+}
+
+#usdc_img {
+	width:70%;
 }
 
 .landing_feature {
 	padding:15%;
 	box-shadow:2px 2px 4px lightgrey;
-	border:1px solid lightgrey;
+	border-bottom:4px solid BurlyWood;
 	border-radius:5px;
+	background:white;
 }
-
 .feature_img {
 	margin:auto;
 	width:60px;
@@ -41,15 +99,55 @@
 	border-radius: 50%;
 }
 
+.feature_image {
+	width:100%;
+	overflow:hidden;
+	border-radius:50%;
+}
+
 .landing_bttn {
-	border:none;
-	background:green;
+	font-family: Arial, Helvetica, sans-serif;	
 	padding:4%;
 	border-radius:20px;
-	width:170px;
+	width:auto;
+	font-weight:bold;
 	font-size:18px;
 	color:white;
 	text-align:center;
+}
+
+._start {
+	background:BurlyWood;
+	border:none;
+}
+
+._demo {
+	background:none;
+	border:2px solid BurlyWood;
+	
+	
+}
+
+.landing_closing {
+	background:dodgerblue;
+
+	margin:10%;
+	color:white;
+	text-align:center;
+}
+
+.landing_closing_b {
+	padding:10%;
+}
+
+.jopay_img_div {
+	height:200px;
+	border:3px solid none;
+}
+
+#jopay_img {
+	width:100%;
+	height:100%;
 }
 
 #dashboard_page {
@@ -58,9 +156,10 @@
 }
 
 #dashboard_top_div {
-	border:1px solid none;
+	border-bottom:2px solid lightgrey;
+
 	margin-left:12%;
-	height:50px;
+	height:auto;
 	background:none;
 }
 
@@ -70,23 +169,33 @@
 }
 
 #logo_name {
-	width:30%;
+	width:40%;
+	text-align:center;
+	border:1px solid none;
 }
 
 #notis {
-	width:30%;
+	width:20%;
+	text-align:center;
+	padding:auto;
+	margin-top:8px;
 }
 
 #user_profile {
+	margin-top:8px;
 	width:40%;
 	text-align:center;
 }
 
-#logo {
+/*#logo {
 	font-size:28px;
 	color:DodgerBlue;
 	font-weight:bold;
 	margin-top:10px;
+}*/
+
+._logo {
+	width:50%;
 }
 
 #dashboard_body {
@@ -113,16 +222,22 @@
 	font-size:16px;
 }
 
-.sidebar {
+.sidebar, .sidemenu {
 	border-right:1px solid lightgrey;
 	background:white;
 	transition :0.3s;
 	height:100%;
 	position: fixed;
 	top:0;
-
 }
 
+.sidemenu {
+	right:0;
+	border-left:1px solid lightgrey;
+	padding:6%;
+	z-index:1000;
+
+}
 .sidebar_link {
 	margin-left:10px;
 }
@@ -146,6 +261,16 @@
 	padding-left:4%;
 }
 
+.floated {
+	position:absolute;
+	right:15px;
+	top:15px;
+}
+
+.logo_icon {
+	width:40%;
+}
+
 ul {
 	padding-left:0;
 	margin-left:0;
@@ -153,6 +278,11 @@ ul {
 
 li {
 	list-style-type:none;
+	text-decoration:none;
+}
+
+a {
+	text-decoration:none;
 }
 
 #txn_boxes {
@@ -175,7 +305,7 @@ li {
 	margin-right:5%;
 }
 
-.clearfix::after, .or_div::after, #dashboard_top_div::after {
+.clearfix::after, .or_div::after, #dashboard_top_div::after, .landing_menu_div {
   content: "";
   display: table;
   clear: both;
@@ -192,12 +322,11 @@ li {
 	height:100%;
 	position:fixed;
 	display:flex;
-	z-index:1000;
-	border:1px solid green;
+	/*z-index:1000;*/
+	color:black;
+	border:1px solid none;
 	top:0;
-	left:0;
-	padding:5%;
-	
+	left:0;	
 	background: rgba(0, 0, 0, 0.5);
 }
 
@@ -206,10 +335,18 @@ li {
 	border-radius:10px;
 	background:white;
 	width:95%;
-	padding:10px;
-	margin:auto;
+	padding:5%;
+	margin:5%;
 }
 
+.connect_wallet_modal {
+	position:absolute;
+	bottom:0;
+	border-radius:10px;
+	background:white;
+	width:100%;
+	padding:10%;
+}
 
 #close_btn {
 	position:absolute;
@@ -224,15 +361,8 @@ li {
 	background:none;
 }
 
-#gen_link_btn {
-	border:none;
-	background:darkblue;
-	text-align:center;
-	margin:auto;
-	color:white;
-}
-
 .generated_link {
+	height:100px;
 	border:1px solid none;
 	position: relative;
 }
@@ -248,20 +378,31 @@ li {
 
 #copy_link {
 	border:none;
-	background:none;
+	background:white;
 	position:absolute;
 	right:0;
 	top:0;
-	margin-top:10px;
+	margin-top:0px;
+
 }
 
-input, select {
+input, select, textarea {
 	width:100%;
 	height:40px;
 	border-radius:6px;
 	border:1px solid lightgrey;
 	background:none;
 }
+
+textarea {
+	height: 80px;
+}
+
+input[type=checkbox] {
+	width:15px;
+	height:15px;
+}
+
 .form_question {
 	margin:auto;
 	text-align:center;
@@ -290,4 +431,157 @@ input, select {
 hr { 
 	color:lightgrey;
 	border: 1px solid lightgrey;
+}
+
+.pay_div {
+	background:none;
+	
+}
+
+.pay_div_image {
+	border:1px solid none;
+	width:100px;
+	height:100px;
+}
+
+#pay_div_logo {
+	width:100%;
+}
+
+.pay_floated_right {
+	position:absolute;
+	top:0;
+	right:0;
+	margin-top:15px;
+	margin-right:15px;
+	border:1px solid none;
+	width:200px;
+	
+}
+
+#conn_wallet {
+	margin-right: 20px;
+}
+
+#pay_menu_btn {
+	border:none;
+	background:none;
+	font-weight:bold;
+	font-size:20px;
+}
+
+#pay_connect_btn {
+	border:none;	
+	background:Burlywood;
+	border-radius:12px;
+	color:white;
+	padding:6%;
+	height:50px;
+	font-size:17px;
+	font-weight:bold;
+}
+
+#pay_btn, #gen_link_btn {
+	border:none;
+	background:Cornflowerblue;
+	border-radius:10px;
+	width:100%;
+	padding:5%;
+	color:white;
+	font-weight:bold;
+}
+
+#pay_btn:disabled {
+	background-color:grey;
+	cursor:not-allowed;
+	opacity:0.7;
+}
+
+#usdc_img_b {
+	position:absolute;
+	right:0;
+	top:0;	
+	width:20%;
+	margin-right:10px;
+	margin-top:10px;
+}
+
+#_note, #_agreement {
+	font-size:12px;
+}
+
+.wallet_balance {
+	padding:5%;
+	border:1px solid lightgrey;
+	border-radius:10px;
+	margin-top:100px;
+}
+
+#_disconnect {
+	border:none;
+	background:none;
+	margin-top:50px;
+}
+#pay_invoice_details {
+	position:relative;
+	border-radius:5px;
+	box-shadow:2px 2px 7px lightgrey;
+	border-bottom:5px solid orange;
+	padding:3% 5% 10% 5%;
+	margin:0% 10% 10% 10%;
+}
+
+#pay_invoice_bottom {
+	background:CornFlowerBlue;
+	height:100px;
+	
+}
+
+.receipt_body {
+	background: lightgrey;
+	padding:6%;
+	min-height:100%;
+}
+
+.receipt_div {
+	border:1px solid black;
+	border-radius:10px;
+	background:white;
+	padding:6%;
+	text-align:center;
+}
+
+.receipt_details {
+	padding:6%;
+	border-radius:10px;
+	text-align:right;
+	background:lightgrey;
+	font-size:11px;
+	color:grey;
+}
+
+.data_details {
+	font-weight:bold;
+	color:black;
+}
+#share_btn {
+	padding:5%;
+	width:100%;
+	border-radius:10px;
+	background:BurlyWood;
+	color:white;
+	border:none;
+}
+
+.footer_div {
+	z-index:1000;
+	background:black;
+	text-align:center;
+	color:grey;
+	padding:5%;
+}
+
+.footer_div hr {
+	border:1px solid grey;
+	margin:0% 10% 0% 10%;
 }
