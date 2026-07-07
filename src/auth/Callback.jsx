@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function AuthCallback() {
 	const navigate = useNavigate();
-	const [status, setStatus] = useState("signing yoi in");
+	const [status, setStatus] = useState("Loading...");
 	useEffect(() => {
 		const handleAuth = async () => {
 			try {
@@ -12,8 +12,11 @@ export default function AuthCallback() {
 				const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
 				if(sessionError) {
 					console.error(sessionError);
-					setStatus("Authentication failed")
-					return
+					setStatus("Authentication failed");
+					setTimeout(() => {
+						navigate("/signup");
+					}, 4000);
+					return;
 				}
 				const session = sessionData.session;
 
@@ -31,28 +34,42 @@ export default function AuthCallback() {
 				console.log("user logged in:", user);
 	
 				//check if merchant already exists
-				const { data: merchant } = await supabase
+				const { data: merchant, error: merchantError } = await supabase
 					.from("merchants")
 					.select("*")
 					.eq("merchant_id", user.id)
-					.single();
+					.maybeSingle();
+				if(merchantError) {
+ 					console.log(merchantError);
+					setStatus("Something went wrong");
+					return;
+				}
 				if (!merchant) {
-					navigate("/complete_signup");
+					navigate("/signup/complete_signup");
 					return;
 				}
 
 				//console.log("Merchant created");
 				
-				setStatus("Success!, redirecting");
+			/*	setStatus("Success!, redirecting");
 
 			//	redirect user to the dashboard
 				setTimeout(() => {
 					navigate( "/dashboard");
-				}, 9000 );
+				}, 5000 );*/
+			
+
+			if(merchant?.wallet_status !== "created") {
+				navigate("/signup/wallet-setup");
+				return;
+			}
+
+			navigate("/dashboard");
 
 			} catch (err) {
 				console.log(err);
 				setStatus("Something went wrong");
+				return;
 			}
 		};
 		handleAuth();

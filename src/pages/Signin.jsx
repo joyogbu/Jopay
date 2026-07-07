@@ -1,22 +1,24 @@
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer.jsx';
 
 function Signin() {
         return (
+		<>
                 <div id="sign_in">
-                        <h3>JoPay</h3>
+                        <h1>JoPay</h1>
                         <form>
-                                <h4>Sign into your Jopay account</h4>
-                                <p>Or</p>
+                                <h2>Sign into your Jopay account</h2>
+                               
                                 <label>Email</label>
                                 <input type="email"></input><br /><br />
-                                <label>Password</label>
-                                <input type="password"></input><br /><br />
-                                <input type="button" value="Sign in"></input><br />
+                                
+                                <button className="sign_in_btn" type="button" value="Sign in">Sign In</button><br />
                         </form><br />
-                        <p><div class="or_div"><div class="or_float or_hr"><hr /></div><div class="or_float or_text">OR</div><div class="or_float or_hr2"><hr /></div></div></p>
-                        <input type="button" value="Sign in with Google"></input><br /><br /><br />
+                        
                         <h4 class="form_question">New to JoPay? <Link to="/signup">Create Account</Link></h4><br />
                 </div>
+		<Footer />
+		</>
         )
 }
 

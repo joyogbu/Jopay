@@ -1,7 +1,8 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import Test from './testing.jsx';
+import WalletSetup from './pages/WalletSetup';
 import Home from './pages/Home.jsx';
 import Signup from './pages/Signup.jsx';
+import MagicLink from './pages/Confirmation_page';
 import Onboarding from './pages/Onboarding.jsx';
 import Signin from './pages/Signin.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -19,10 +20,11 @@ function App() {
 		
 			
 			<Routes>
-				<Route path="/testing" element={<Test />} />
+				<Route path="/signup/wallet-setup" element={<WalletSetup />} />
 				<Route path="/" element={ <Home /> } />
 				<Route path="/signup" element={ <Signup /> } />
-				<Route path="/complete_signup" element={ <Onboarding /> } />
+				<Route path="/signup/confirmation" element={ <MagicLink /> } />
+				<Route path="/signup/complete_signup" element={ <Onboarding /> } />
 				<Route path="/login" element={ <Signin /> } />
 				<Route path="/connect_wallet" element={ <ConnectWallet /> } />
 				<Route path="/dashboard" element={

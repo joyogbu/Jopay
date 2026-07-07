@@ -3,15 +3,16 @@ import { FaLink, FaRegClone } from 'react-icons/fa';
 //import {createInvoice} from '../components/CreateInvoice.jsx'
 
 import {supabase} from '../lib/supabase.js';
+import { useMerchant } from '../auth/MerchantContext.jsx';
 
 function PaymentLink({ closeModal }) {
+	const {merchant} = useMerchant();
 	const [payLink, setPayLink] = useState("");
+	const [statusError, setStatusError] = useState("");
 	const [formData, setFormData] = useState({
-		merchant_name: "Jotech Business Solutions",
-		merchant_wallet: "0xAA8A308205C3aAe6c598509A94276a1cdf6237cE",
 		amount: "",
 		description: "",
-	})
+	});
 	const [isCopied, setIsCopied] = useState(false);
 
 	const handleForm = (e) => {
@@ -22,14 +23,18 @@ function PaymentLink({ closeModal }) {
 
 	const createInvoice = async (e) => {
 		e.preventDefault();
-
+		if(!formData.amount || formData.amount <= 0) {
+			setStatusError("Please enter the amount");
+			return;
+		}
 	
 
 		const { data, error } = await supabase.from('invoices')
 			.insert([
 				{
-					merchant_name: formData.merchant_name,
-					merchant_wallet: formData.merchant_wallet,
+					merchant_id: merchant?.merchant_id,
+					merchant_name: merchant?.merchant_name,
+					merchant_wallet: merchant?.circle_wallet_address,
 					amount: Number(formData.amount),
 					description: formData.description,
 					tx_hash: formData.tx_hash
@@ -52,7 +57,7 @@ function PaymentLink({ closeModal }) {
 		setIsCopied(true);
 
 		setTimeout(() => {
-			setCopied(false);
+			setIsCopied(false);
 		}, 200);
 	}
 
@@ -65,6 +70,7 @@ function PaymentLink({ closeModal }) {
 				<h2>Get paid in USDC instantly</h2>
 				<br />
 				<h3>Create Payment Link</h3>
+				<p>{statusError}</p>
 				<form onSubmit={createInvoice}>
 					<label>
 Amount (USDC)</label><br />

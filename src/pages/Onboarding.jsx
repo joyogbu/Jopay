@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase.js';
+import Footer from '../components/Footer.jsx';
 
 function CompleteSignup() {
 	const navigate = useNavigate();
@@ -21,13 +22,17 @@ function CompleteSignup() {
 			//signed up? check if fully onboarded
 			const {data: profile} = await supabase
 				.from("merchants")
-				.select("is_active")
+				.select("is_active, wallet_status")
 				.eq("merchant_id", user.id)
 				.single();
 
 			//Already onboarded, redirect to dashboard
 			if(profile?.is_active) {
-				navigate("/dashboard");
+				if(profile?.wallet_status === "created") {
+					navigate("/dashboard");
+					return;
+				}
+				navigate("/signup/wallet-setup");
 				return;
 			}
 
@@ -79,19 +84,23 @@ function CompleteSignup() {
 
 
         return (
+		<>
                 <div id="sign_up">
-                        <h3>JoPay</h3>
+                        <h1>JoPay</h1>
+			<h2>Continue with setting up your Account</h2>
                         <form onSubmit= {submitForm }>
-                                <h4>Step 2: Complete Sign Up</h4>
+                                <h3>Step 2: Complete Sign Up</h3>
                                
-                                <label>Business Name</label>
+                                <label>Business Name:</label><br />
                                 <input type="text" placeholder="Enter your Business name" name="merchant_name" value={formData.merchant_name} onChange={handleForm}></input><br /><br />
-                                <label>Business Country</label>
+                                <label>Business Country:</label><br />
                                 <input type="text" placeholder="Country" name="merchant_address" value={formData.merchant_address} onChange={handleForm}></input><br /><br />
 
                                 <button type="submit" value="continue">Continue</button><br /><br />
                         </form><br />
 		</div>
+		<Footer />
+		</>
 	);
 }
 export default CompleteSignup; 

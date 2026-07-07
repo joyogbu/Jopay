@@ -1,10 +1,11 @@
 import {useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase.js';
+import Footer from '../components/Footer.jsx';
 
 function Signup() {
 
-	//check if user is already signed in
+	//check if user is already signed in and if session exists
 	const navigate = useNavigate();
 	useEffect(() => {
 		async function checkUser() {
@@ -59,28 +60,30 @@ function Signup() {
 		
 
 		if(error) {
-			throw error;
+			console.log("My error:", error);
+			setInputError(error);
+			return;
 		}
-		return data;
 		console.log("data:", data);
 		console.log("error:", error);
+		navigate("/signup/confirmation");
 	}
 			
 
 
         return (
+		<>
 		<div id="sign_up">
-			<h3>JoPay</h3>
+			<h1>JoPay</h1>
+			<h2>Create an account and receive USDC payments in seconds</h2>
 			<form onSubmit={submitForm}>
-				<h4>Step 1: Create Account</h4>
-				<input type="button" value="Sign up with Google"></input><br />
-				<div className="or_div"><div className="or_float or_hr"><hr /></div><div className="or_float or_text">OR</div><div className="or_float or_hr2"><hr /></div></div>
-				<label>Email</label>
+				<h3>Step 1: Create Account</h3>
+				
+				<label>Email:</label><br /><br />
 				<input type="email" placeholder="Enter your email" name="merchant_email" value={formData.merchant_email} onChange={handleForm}></input><br /><br />
-				<label>Business Name</label>
-				<input type="text" placeholder="Enter your Business name" name="merchant_name" value={formData.merchant_name} onChange={handleForm}></input><br /><br />
 				{inputError && <p style={{ color:"red" }}>{inputError}</p>}
-				<button type="submit" value="Create Account">Create Account</button><br /><br />
+				<br />
+				<button className="sign_up_btn" type="submit" value="Create Account">Create Account</button><br /><br />
 			</form><br />
 			<div className="form_question">
 				Already have an account? 
@@ -91,7 +94,11 @@ function Signup() {
 		
 				</div>
 			</div>
+			
 		</div>
+		<br />
+		<Footer />
+		</>
 	);
 }
 

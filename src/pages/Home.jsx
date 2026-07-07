@@ -45,13 +45,12 @@ function Home() {
 
 			<div id="landing_two">
 				
-				<div class="landing_feature"><div class="feature_img"><img className="feature_image" src={image18} /></div><br /> <p> <span className="text_change">No Wallet Friction</span>Get a wallet generated instantly for non-crypto native.</p></div><br /><br />
+				<div class="landing_feature"><div class="feature_img"><img className="feature_image" src={image18} /></div><br /> <h3 className="text_change_b">No Wallet Friction</h3><p>Get a wallet generated instantly, for non-crypto native.</p> <button className="learn_more"> Learn More</button></div><br /><br />
 
-                                <div class="landing_feature"><div class="feature_img"><img className="feature_image" src={image18} /></div><br /> <p><h3> <span className="text_change">Whatsapp Payment Links.</span></h3> Create a payment link in seconds and share it on WhatsApp.</p></div><br /><br />
-				<div class="landing_feature"><div class="feature_img"><img className="feature_image" src= {image82} /></div><br /> <p><span className="text_change"> Instant USDC Settlement.</span>Get paid globally in stablecoins without banking stress. </p></div><br /><br />
+                                <div className="landing_feature"><div className="feature_img"><img className="feature_image" src={image18} /></div><br /> <h3 className="text_change_b">Whatsapp Payment Links.</h3><p> Create a payment link in seconds and share it on WhatsApp.</p> <button className="learn_more"> Learn More</button> </div><br /><br />
+				<div className="landing_feature"><div className="feature_img"><img className="feature_image" src= {image82} /></div><br /> <h3 className="text_change_b"> Instant USDC Settlement.</h3><p>Get paid in stablecoins in seconds without banking stress. </p> <button className="learn_more"> Learn More</button> </div><br /><br />
 
-                                <div class="landing_feature"><div class="feature_img"><img className="feature_image" src= {image82} /></div><br /> <p>Cross-border Friendly. No card restrictions. No banking borders</p></div><br /><br />
-                                <div class="landing_feature"><div class="feature_img"><img className="feature_image" src={image19} /></div><br /> <p>Secure & Transparent. Transparent Transactions. Blockchain Verified</p></div><br /><br />
+					<div className="landing_feature"><div className="feature_img"><img className="feature_image" src={image19} /></div><br /> <h3 className="text_change_b">Secure & Transparent. </h3><p>Transparent Transactions. Blockchain Verified</p> <button className="learn_more"> Learn More</button></div><br /><br />
 			</div>
 			<div className="landing_closing">
 				<div className="jopay_img_div"><img src={bg} id="jopay_img" /></div>

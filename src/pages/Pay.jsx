@@ -61,8 +61,10 @@ function PayInvoice() {
 		}
 	}, [invoice])
 
-	const USDC_ADDRESS =
-  "0x3600000000000000000000000000000000000000"
+	//const USDC_ADDRESS =
+ // "0x3600000000000000000000000000000000000000"
+	const USDC_ADDRESS = import.meta.env.VITE_ARC_USDC_ADDRESS;
+
 	const payInvoice = async (e) => 
 	{
 		e.preventDefault();

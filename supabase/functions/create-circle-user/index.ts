@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
 
 	const {data: merchant, error: merchantError} = await supabase
 		.from("merchants")
-		.select("circle_user_id")
+		.select("circle_user_id, wallet_status")
 		.eq("merchant_id", user.id)
 		.single();
 	
@@ -61,6 +61,18 @@ Deno.serve(async (req) => {
 		);
 	}
 
+	//check if user already has a wallet and return if.
+	if(merchant.wallet_status === "created") {
+		return Response.json({
+			success: true,
+			walletStatus: "created",
+		},
+		{
+			headers: corsHeaders,
+		});
+	}
+
+	//No wallet? check if user is already a circle user
 	if(merchant.circle_user_id) {
 		return Response.json(
 			{

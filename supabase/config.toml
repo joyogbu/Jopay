@@ -467,3 +467,36 @@ entrypoint = "./functions/sync-circle-wallet/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/sync-circle-wallet/*.html" ]
+
+[functions.get-wallet-balance]
+enabled = true
+verify_jwt = false
+import_map = "./functions/get-wallet-balance/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/get-wallet-balance/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/get-wallet-balance/*.html" ]
+
+[functions.send-usdc]
+enabled = true
+verify_jwt = false
+import_map = "./functions/send-usdc/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/send-usdc/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/send-usdc/*.html" ]
+
+[functions.confirm-usdc-transfer]
+enabled = true
+verify_jwt = false
+import_map = "./functions/confirm-usdc-transfer/deno.json"
+# Uncomment to specify a custom file path to the entrypoint.
+# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+entrypoint = "./functions/confirm-usdc-transfer/index.ts"
+# Specifies static files to be bundled with the function. Supports glob patterns.
+# For example, if you want to serve static HTML pages in your function:
+# static_files = [ "./functions/confirm-usdc-transfer/*.html" ]

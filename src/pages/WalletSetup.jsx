@@ -1,11 +1,27 @@
-import {supabase} from './lib/supabase.js';
+import {useState, useEffect} from 'react';
+import {supabase} from '../lib/supabase.js';
 import { W3SSdk } from "@circle-fin/w3s-pw-web-sdk";
 import { useNavigate } from "react-router-dom";
 
-export function Test() {
+export function WalletSetup() {
 	const navigate = useNavigate();
+	const [pageStatus, setPagestatus] = useState("Processing...");
 	const sdk = new W3SSdk({                                                              appSettings: {                                 appId: import.meta.env.VITE_CIRCLE_APP_ID,                            },
 	 });
+
+	useEffect(() => {
+		async function setup() {
+			const {data: { user } } = await supabase.auth.getUser(
+);
+                        //if no session, redirect to sign up
+                        if(!user) {
+                                navigate("/signup");
+                                return;
+                        }
+			await createCircleUser();
+		}
+		setup();
+	}, []);
 
 	async function createCircleUser() {
 		const { data: dataUser, error: errorUser } = await supabase.functions.invoke("create-circle-user");
@@ -13,7 +29,17 @@ export function Test() {
 			console.error(errorUser);
 			return;
 		}
-		await initializeUser();
+		
+		//check if user already has a circle wallet
+		if(dataUser.walletStatus === "created") {
+			navigate("/dashboard");
+			return;
+		}
+
+		setPagestatus("Setting up your profile...");
+
+		setTimeout(async () => {await initializeUser();
+		}, 5000 );
 	}
                     
 
@@ -31,16 +57,13 @@ export function Test() {
 		console.log(data);
 		if(data.initialized === true) {
 			console.log("user already initialized");
-			await syncWallet();
+
+			setPagestatus("Please wait while we update your profile...");
+			setTimeout(async () => { await syncWallet();
+			}, 5000 );
 			return;
 		}
 
-	
-		/*const sdk = new W3SSdk({
-			appSettings: {
-				appId: import.meta.env.VITE_CIRCLE_APP_ID,
-			},
-		});*/
 
 		console.log("SDK:", sdk);
 		console.log("Initialize response:", data);
@@ -48,6 +71,8 @@ export function Test() {
 			userToken: data.userToken,
 			encryptionKey: data.encryptionKey,
 		});
+
+		setPagestatus("Creating your wallet...");
 
 		console.log("SDK authenticated");
 		console.log("Challenge ID:", data.challengeId);
@@ -57,59 +82,17 @@ export function Test() {
 				return;
 			}
 	
-			console.error("Challenge completed:", result);
+			console.log("Challenge completed:", result);
 		
 		
 
 			console.log("my data:", data);
 			console.log("any error:", error);
-			await syncWallet();
+			setTimeout(async () => { await syncWallet();
+			}, 5000 );
 		});
 	}
 
-	async function createWallet() {
-		console.log("create wallet started");
-		const {data, error} = await supabase.functions.invoke(                                "create-circle-wallet"
-		);
-		if(error || !data) {
-			console.log("mrssage: there is error or no data");
-			return;
-		}
-		
-		/*if (data.walletCreated === true) {
-			navigate("/dashboard");
-			return;
-		}*/
-
-		sdk.setAuthentication({
-                        userToken: data.userToken,
-                        encryptionKey:
-data.encryptionKey,
-                });
-
-		sdk.execute(data.challengeId, async (error, result) => {
-			if (error) {
-				console.error("Wallet challenge failed:", error);
-				return;
-			}
-
-			console.log("Wallet created:", result);
-
-			//wallet created
-			//synchronize with database
-			const { data: syncData, error: syncError } = await supabase.functions.invoke("sync-circle-wallet");
-			if (syncError) {
-				console.error(syncError);
-				return;
-			}
-			console.log(syncData);
-    
-			// Navigate to dashboard
-			navigate("/dashboard");
-
-
-		});
-	}
 	
 	async function syncWallet() {
 		console.log("sync wallet started");
@@ -124,6 +107,8 @@ data.encryptionKey,
 		}
 
 		console.log("syncWallet completed");
+
+		setPagestatus("Wallet set up complete. Redirecting...");
 		navigate("/dashboard");
 	}
 
@@ -137,11 +122,10 @@ data.encryptionKey,
 		console.log("User info:", getUserData);
 	}
 
-
 	return (
 		<>
-			<button onClick={createCircleUser}>test it</button>
+			<p>{pageStatus}</p>
 		</>
 	);
 }
-export default Test;
+export default WalletSetup;
