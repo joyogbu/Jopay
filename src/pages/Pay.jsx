@@ -109,7 +109,7 @@ function PayInvoice() {
 
 			//navigate to receipt page
 			setTimeout(() => {
-				navigate(`/receipt?invoiceId=${invoiceId}&txHash=${txHash}`);
+				navigate(`/pay/receipt?invoiceId=${invoiceId}&txHash=${txHash}`);
 			}, 2000);
 		}
 		updateInvoice();
