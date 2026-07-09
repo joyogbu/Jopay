@@ -54,7 +54,8 @@ function Signup() {
 		const {data, error} = await supabase.auth.signInWithOtp({
 			email: formData.merchant_email,
 			options: {
-				emailRedirectTo: "http://localhost:5173/auth/callback"
+				emailRedirectTo: `${window.location.origin}/auth/callback`
+				//emailRedirectTo: "http://localhost:5173/auth/callback"
 			}
 		})
 		
