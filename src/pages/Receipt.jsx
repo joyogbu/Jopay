@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { supabase } from '../lib/supabase.js';
+import { escrowAbi } from "../abi/escrowAbi";
 
 function Receipt() {
+	const { writeContractAsync } = useWriteContract();
+
+	const [releaseHash, setReleaseHash] = useState(null);
+	
 	const [searchParams] = useSearchParams();
 	const invoiceId = searchParams.get("invoiceId");
 	const txHash = searchParams.get("txHash");
+
 
 	const [receipt, setReceipt] = useState(null);
 	console.log(invoiceId);
@@ -31,6 +38,52 @@ function Receipt() {
 	    loadReceipt();
 	}, [invoiceId]);
 
+	const ESCROW_ADDRESS = import.meta.env.VITE_ESCROW_ADDRESS;
+
+	const releaseFunds = async () => {
+		try {
+			const hash = await writeContractAsync({
+				address: ESCROW_ADDRESS,
+				abi: escrowAbi,
+				functionName: "release",
+				args: [invoiceId]
+			});
+			console.log("Release Tx:", hash);
+			setReleaseHash(hash);
+		} catch (error) {
+
+			console.log(error);
+		}
+	};
+
+	const { isSuccess: releaseSuccess } = useWaitForTransactionReceipt({
+		hash: releaseHash,
+	});
+
+
+	useEffect(() => {
+		if (!releaseSuccess || !releaseHash) return;
+
+		const updateInvoice = async () => {
+			const { error } = await supabase
+				.from("invoices")
+				.update({
+					status: "Paid",
+					tx_hash: releaseHash,
+					released_at: new Date().toISOString()
+				})
+				.eq("invoice_id", invoiceId);
+			if (error) {
+				console.log(error);
+				return;
+			}
+			
+			alert("Funds released successfully!");
+		};
+		updateInvoice();
+	}, [releaseSuccess, releaseHash, invoiceId
+	]);
+
 	/*if(error) {
 		return (
 			<>
@@ -44,7 +97,8 @@ function Receipt() {
 			<div className="receipt_div">
 				<h2>Transaction Receipt</h2>
 				<span>🎉</span>	
-				<p>Payment sent! We will let the recipient know you have sent money</p>
+				<h3>Payment Sent!</h3>
+				<p>Your payment has been deposited into escrow. The merchant will receive funds after you confirm that the goods or services has been delivered.</p>
 				<div className="receipt_details">
 					<p><span>Transaction Date:  </span><span className="data_details">{receipt?.tx_hash ? new Date(receipt?.paid_at).toLocaleString() : ""}</span></p>
 					<p><span>Recipient Wallet:  </span><span className="data_details">{receipt?.merchant_wallet}</span></p>
@@ -52,11 +106,12 @@ function Receipt() {
 					<p><span>Amount:  </span><span className="data_details">{receipt?.amount}  USDC</span></p>
 					<p><span>Description:  </span><span className="data_details">{receipt?.description}</span></p>
 					<p><span>Status:  </span><span className="data_details">{receipt?.status}</span></p>
-					<p><span>Reference:  </span><span className="data_details">   <a target="_blank" href={`https://testnet.arcscan.app/tx/${receipt?.tx_hash}`}> {receipt?.tx_hash ? `${ receipt?.tx_hash.slice(0, 6)}...${receipt?.tx_hash.slice(-4)}` : ""}</a></span></p>
+					<p><span>Reference:  </span><span className="data_details">   <a target="_blank" href={`https://testnet.arcscan.app/tx/${txHash}`}> {txHash ? `${ txHash.slice(0, 6)}...${txHash.slice(-4)}` : ""}</a></span></p>
+					<p><span>Reference:  </span><span className="data_details">   <a target="_blank" href={`https://testnet.arcscan.app/tx/${releaseHash}`}> {releaseHash ? `${ releaseHash.slice(0, 6)}...${releaseHash.slice(-4)}` : ""}</a></span></p>
 					<hr /><br />
 				</div>
 				<br /><br />
-				<button id="share_btn">Share Receipt</button>
+				<button id="share_btn" onClick={releaseFunds} disabled={releaseSuccess || receipt?.status==="Paid"}> {receipt?.status === "Paid" ? "Funds Released" : "Release Funds"}</button>
 
 				<br />
 				<br />

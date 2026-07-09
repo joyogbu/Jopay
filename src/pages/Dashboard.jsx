@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaCog, FaExchangeAlt, FaDollarSign, FaSignOutAlt, FaUser, FaBell, FaWallet, FaCoins, FaCheckCircle, FaClock, FaHistory, FaPaperPlane } from 'react-icons/fa';
+import { FaHome, FaCog, FaExchangeAlt, FaRegClone, FaDollarSign, FaFileInvoiceDollar, FaSignOutAlt, FaUser, FaBell, FaWallet, FaCoins, FaCheckCircle, FaClock, FaHistory, FaPaperPlane } from 'react-icons/fa';
 import { supabase } from '../lib/supabase.js';
 import PaymentLink from '../components/PaymentLink.jsx';
 import SendTransaction from '../components/SendTransaction.jsx';
@@ -9,11 +9,20 @@ import Footer from '../components/Footer.jsx';
 import logo from '../images/logo2.png'
 
 function DashboardHeader() {
-  const {merchant} = useMerchant();
+  const {merchant, walletBalance} = useMerchant();
+  const [copyWallet, setCopyWallet] = useState("");
+  const [isCopied, setIsCopied] = useState(false);
   const walletAddress = merchant?.circle_wallet_address;
   
   const trimAddress = walletAddress ? `${walletAddress?.slice(0, 6)}...${walletAddress?.slice(-4)}` : "";
- 
+  const copyAddress = async () => {
+	  await navigator.clipboard.writeText(walletAddress);
+	  setIsCopied(true);
+	  setTimeout(() => {
+		  setIsCopied(false);
+	  }, 200);
+  }
+
   return (
     <div id="dashboard_top_div">
 	  <div id="logo_name" className="top_div">
@@ -25,12 +34,12 @@ function DashboardHeader() {
 	  <div className="top_div" id="notis">
 	  	<span><FaBell /></span>
 	  </div>
-	  <div className="top_div" id="user_profile">
+	  <div className="top_div" id="user_wallet">
 	  	<div id="profile_img">
-	  		<FaUser />
+	  		<span>{walletBalance ?? "0"} USDC</span>
 	  	</div>
-	  	<div id="profile_name">
-	  		<span>{ trimAddress }</span>
+	  	<div id="_wallet">
+	  		<span>{ trimAddress }</span><span><button className="copy_link" onClick={ copyAddress }>{isCopied ? "Copied!" : <FaRegClone />}</button></span>
 	  	</div>
 	  </div>
     </div>
@@ -115,13 +124,13 @@ function TotalTxn() {
                 <div id="txn_boxes" className="clearfix">
 			<p>See what is happening in your business today</p>
                         <div className ="txn_box" id="total_inv">
-				<p className="txn_fa_icons"><FaHistory /></p>
+				<p className="txn_fa_icons"><FaFileInvoiceDollar /></p>
                                 <span>Total Invoices</span><br />
 				<h3>{invoiceStats?.totalInvoices}</h3>
                                 <span>Total invoices generated</span>
                         </div>
                         <div className="txn_box" id="wallet_balance">
-				<p className="txn_fa_icons"><FaWallet /></p>
+				<p className="txn_fa_icons"><FaWallet style={{color: "blue" }}/></p>
                                 <span>Wallet Balance</span>
                                 <h3>{walletBalance ?? "0"} USDC</h3>
 			

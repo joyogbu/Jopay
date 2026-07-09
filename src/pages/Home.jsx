@@ -3,9 +3,11 @@ import logo from '../images/logo2.png';
 import image18 from '../images/image18.png';
 import image19 from '../images/image19.png';
 import image82 from '../images/image82.jpeg';
+import wallet from '../images/wallet1.jpg';
+import link from '../images/link2.png';
+import bg from '../images/received1.png';
 import image4 from '../images/image4.png';
 import Footer from '../components/Footer.jsx';
-import bg from '../images/bg.png';
 
 function Home() {
 
@@ -45,9 +47,9 @@ function Home() {
 
 			<div id="landing_two">
 				
-				<div class="landing_feature"><div class="feature_img"><img className="feature_image" src={image18} /></div><br /> <h3 className="text_change_b">No Wallet Friction</h3><p>Get a wallet generated instantly, for non-crypto native.</p> <button className="learn_more"> Learn More</button></div><br /><br />
+				<div class="landing_feature"><div class="feature_img"><img className="feature_image" src={wallet} /></div><br /> <h3 className="text_change_b">No Wallet Friction</h3><p>Get a wallet generated instantly, for non-crypto native.</p> <button className="learn_more"> Learn More</button></div><br /><br />
 
-                                <div className="landing_feature"><div className="feature_img"><img className="feature_image" src={image18} /></div><br /> <h3 className="text_change_b">Whatsapp Payment Links.</h3><p> Create a payment link in seconds and share it on WhatsApp.</p> <button className="learn_more"> Learn More</button> </div><br /><br />
+                                <div className="landing_feature"><div className="feature_img"><img className="feature_image" src={link} /></div><br /> <h3 className="text_change_b">Payment Links.</h3><p> Create a payment link in seconds and share it on WhatsApp.</p> <button className="learn_more"> Learn More</button> </div><br /><br />
 				<div className="landing_feature"><div className="feature_img"><img className="feature_image" src= {image82} /></div><br /> <h3 className="text_change_b"> Instant USDC Settlement.</h3><p>Get paid in stablecoins in seconds without banking stress. </p> <button className="learn_more"> Learn More</button> </div><br /><br />
 
 					<div className="landing_feature"><div className="feature_img"><img className="feature_image" src={image19} /></div><br /> <h3 className="text_change_b">Secure & Transparent. </h3><p>Transparent Transactions. Blockchain Verified</p> <button className="learn_more"> Learn More</button></div><br /><br />

@@ -8,7 +8,7 @@ import Signin from './pages/Signin.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import ConnectWallet from './pages/ConnectWallet.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-import Pay from './pages/Pay.jsx';
+import PayEscrow from './pages/PayEscrow.jsx';
 import Receipt from './pages/Receipt.jsx';
 import AuthCallback from './auth/Callback.jsx';
 
@@ -32,7 +32,7 @@ function App() {
 					<Dashboard /> 
 				</ProtectedRoute>}
 				/>
-				<Route path="/pay/:invoiceId" element={ <Pay /> } />
+				<Route path="/pay/:invoiceId" element={ <PayEscrow /> } />
 				<Route path="/pay/receipt" element={ <Receipt /> } />
 				<Route path="/auth/callback" element={ <AuthCallback /> } />
 			</Routes>

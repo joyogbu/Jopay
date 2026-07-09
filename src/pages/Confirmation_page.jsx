@@ -1,8 +1,9 @@
+import envelope from '../images/env1.png';
 function MagicLink() {
 	return (
 		<div className="confirmation_div">
-			<div className="envelope_big">
-				<img src="#" />
+			<div className="envelope_box">
+				<img className="envelope_big" src={envelope} />
 			</div>
 			<div className="confirmation_text_div">
 				<h1>Check your inbox to activate your account</h1>

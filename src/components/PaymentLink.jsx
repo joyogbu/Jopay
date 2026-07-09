@@ -76,15 +76,16 @@ function PaymentLink({ closeModal }) {
 Amount (USDC)</label><br />
 					<input name="amount" placeholder="Enter Amount" value={formData.amount} type="number" min="0" step="0.01" onChange={handleForm} required /><br /><br />
 					<label> Description (Optional)</label><br />
-					<textarea name="description" type="text" placeholder="Decription" value={formData.description} onChange={handleForm} /><br /><br />
+					<textarea name="description" type="text" placeholder="Decription" value={formData.description} onChange={handleForm} /><br />
+
+					{payLink && ( <div className="generated_link">
+                                        <input type="text" value={payLink} readOnly />
+                                        <button className="copy_link" onClick={ copyLink }>{isCopied ? "Copied!" : <FaRegClone />}</button>
+                                	</div>)}
 					<button value="Generate Link" type="submit" id="gen_link_btn">Generate Link <FaLink /></button><br /><br />
 				</form>
 				<br />
-				{payLink && ( <div className="generated_link">
-					<input type="text" value={payLink} readOnly />
-					<button id="copy_link" onClick={ copyLink }>{isCopied ? "Copied!" : <FaRegClone />}</button>
-				</div>
-				)}
+				
 				
 			</div>
 		</div>
