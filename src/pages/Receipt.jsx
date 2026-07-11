@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import {useAccount, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
+import { useWallet } from '../Wallet.jsx';
 import { supabase } from '../lib/supabase.js';
 import { escrowAbi } from "../abi/escrowAbi";
 
 function Receipt() {
+	const { handleConnect, address, isConnected, disconnect, chainId } = useWallet();
+
+	let shortAddress;
+        if (address) {
+                shortAddress = `${address.slice(0, 6)}...${address.slice(-4)}`;
+        }
+
 	const { writeContractAsync } = useWriteContract();
 
 	const [releaseHash, setReleaseHash] = useState(null);
@@ -38,9 +46,20 @@ function Receipt() {
 	    loadReceipt();
 	}, [invoiceId]);
 
+	const reconnectWallet = async() => {
+		e.preventdefault();
+		return;
+	}
+		
+
 	const ESCROW_ADDRESS = import.meta.env.VITE_ESCROW_ADDRESS;
 
 	const releaseFunds = async () => {
+		if (!isConnected) {
+			alert("Please connect your wallet.");
+			return;
+		}
+
 		try {
 			const hash = await writeContractAsync({
 				address: ESCROW_ADDRESS,
@@ -111,8 +130,14 @@ function Receipt() {
 					<hr /><br />
 				</div>
 				<br /><br />
-				<button id="share_btn" onClick={releaseFunds} disabled={releaseSuccess || receipt?.status==="Paid"}> {receipt?.status === "Paid" ? "Funds Released" : "Release Funds"}</button>
+				<button id="release_usdc_btn" onClick={releaseFunds} disabled={releaseSuccess || receipt?.status==="Paid"}> {receipt?.status === "Paid" ? "Funds Released" : "Release Funds"}</button>
+				<br />
+				{!isConnected && (
+					<div className="wallet_warning">Wallet disconnected. Please reconnect the same wallet to continue.
+					</div>
+				)}
 
+				<button type="button" className="reconnect_wallet" onClick={handleConnect}>{isConnected ? shortAddress : "Connect"}</button>
 				<br />
 				<br />
 			</div>

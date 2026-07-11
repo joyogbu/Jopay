@@ -11,6 +11,7 @@ function PaymentLink({ closeModal }) {
 	const [statusError, setStatusError] = useState("");
 	const [formData, setFormData] = useState({
 		amount: "",
+		customer_name: "",
 		description: "",
 	});
 	const [isCopied, setIsCopied] = useState(false);
@@ -36,6 +37,7 @@ function PaymentLink({ closeModal }) {
 					merchant_name: merchant?.merchant_name,
 					merchant_wallet: merchant?.circle_wallet_address,
 					amount: Number(formData.amount),
+					customer_name: formData.customer_name,
 					description: formData.description,
 					tx_hash: formData.tx_hash
 				}
@@ -66,26 +68,25 @@ function PaymentLink({ closeModal }) {
 		<div className= "modal_overlay">
 			<div className="modal_box">
 				<button onClick={closeModal} id="close_btn"> X </button>
-				<br />
+				
 				<h2>Get paid in USDC instantly</h2>
-				<br />
 				<h3>Create Payment Link</h3>
 				<p>{statusError}</p>
 				<form onSubmit={createInvoice}>
 					<label>
 Amount (USDC)</label><br />
 					<input name="amount" placeholder="Enter Amount" value={formData.amount} type="number" min="0" step="0.01" onChange={handleForm} required /><br /><br />
+					<label>Customer name</label><br />
+					<input type="text" name="customer_name" placeholder="Enter Customer Name" value={formData.customer_name} onChange={handleForm} required /><br /><br />
 					<label> Description (Optional)</label><br />
 					<textarea name="description" type="text" placeholder="Decription" value={formData.description} onChange={handleForm} /><br />
 
 					{payLink && ( <div className="generated_link">
                                         <input type="text" value={payLink} readOnly />
-                                        <button className="copy_link" onClick={ copyLink }>{isCopied ? "Copied!" : <FaRegClone />}</button>
+                                        <button type="button" className="copy_link" onClick={ copyLink }>{isCopied ? "Copied!" : <FaRegClone />}</button>
                                 	</div>)}
-					<button value="Generate Link" type="submit" id="gen_link_btn">Generate Link <FaLink /></button><br /><br />
+					<button value="Generate Link" type="submit" id="gen_link_btn" disabled={!!payLink}>{payLink ? "Link Generated" : "Generate Link"} <FaLink /></button><br />
 				</form>
-				<br />
-				
 				
 			</div>
 		</div>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { isAddress } from "viem";
 import { FaLink } from 'react-icons/fa';
 import { W3SSdk } from "@circle-fin/w3s-pw-web-sdk";
 import { supabase } from '../lib/supabase.js';
@@ -43,6 +44,14 @@ function SendTransaction({ closeUsdc }) {
 	    setSendStatus("Please enter the recipient address and amount");
 	    setSendStatusType("error");
 	    return;
+	}
+
+	if (!isAddress(usdcformData.send_address)) {
+		setSendStatus("Enter a valid wallet address.");
+		setSendStatusType("error");
+		setIsBusy(false);
+		setButtonstate("Send");
+		return;
 	}
 
 	const { data, error } = await supabase.functions.invoke("send-usdc", {

@@ -1,17 +1,19 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaCog, FaExchangeAlt, FaRegClone, FaDollarSign, FaFileInvoiceDollar, FaSignOutAlt, FaUser, FaBell, FaWallet, FaCoins, FaCheckCircle, FaClock, FaHistory, FaPaperPlane } from 'react-icons/fa';
+import { FaHome, FaCog, FaExchangeAlt, FaArrowRight, FaRegClone, FaDollarSign, FaFileInvoiceDollar, FaSignOutAlt, FaUser, FaBell, FaWallet, FaCoins, FaCheckCircle, FaClock, FaHistory, FaPaperPlane } from 'react-icons/fa';
 import { supabase } from '../lib/supabase.js';
 import PaymentLink from '../components/PaymentLink.jsx';
 import SendTransaction from '../components/SendTransaction.jsx';
 import { MerchantProvider, useMerchant, } from '../auth/MerchantContext.jsx';
 import Footer from '../components/Footer.jsx';
 import logo from '../images/logo2.png'
+import usdc from '../images/usdc1.png'
 
 function DashboardHeader() {
-  const {merchant, walletBalance} = useMerchant();
+  const {merchant, invoices, walletBalance} = useMerchant();
   const [copyWallet, setCopyWallet] = useState("");
   const [isCopied, setIsCopied] = useState(false);
+  const [isDropdown, setIsDropdown] = useState(false);
   const walletAddress = merchant?.circle_wallet_address;
   
   const trimAddress = walletAddress ? `${walletAddress?.slice(0, 6)}...${walletAddress?.slice(-4)}` : "";
@@ -20,11 +22,47 @@ function DashboardHeader() {
 	  setIsCopied(true);
 	  setTimeout(() => {
 		  setIsCopied(false);
-	  }, 200);
+	  }, 500);
   }
+  function dropNotis() {
+	setIsDropdown(!isDropdown);
+  }
+  const notifications = invoices.filter(invoice => invoice.status === "Escrowed" || invoice.status === "Paid" );
+  const notificationCount = invoices.filter(invoice => invoice.status === "Escrowed").length;
 
   return (
     <div id="dashboard_top_div">
+
+
+
+
+
+	<div className={`notification_div ${isDropdown ? "show_notis" : ""}`}>
+                        <p><u>Notifications</u></p>
+
+
+                        {notifications.length === 0 ? (
+                                <p>No notifications.</p>
+                        ) : (
+                                notifications.map(invoice => (
+                                        <div key={invoice.invoice_id} className="notification-item">
+                                        <span><b>{`${invoice.customer_name}: ` }</b></span><span><b>{invoice.description}</b></span>
+                                        {invoice.status === "Escrowed" && ( <p> {invoice.amount} USDC has been deposited into escrow. </p>)}
+                                        {invoice.status === "Paid" && ( <p> {invoice.amount} USDC has been released successfully.</p>)}
+                                        <small>{new Date(invoice.released_at).toLocaleString()}</small>
+                                        </div>
+                                ))
+                        )}
+
+
+
+                </div>
+
+
+
+
+
+
 	  <div id="logo_name" className="top_div">
 	  	<div className="logo_div" id="logo">
 	  		<img src={ logo } className="_logo" />
@@ -32,11 +70,16 @@ function DashboardHeader() {
 	  	</div>
 	  </div>
 	  <div className="top_div" id="notis">
-	  	<span><FaBell /></span>
+	  	<button id="notification_bell" onClick={dropNotis}><FaBell /></button>
+	  	{notificationCount > 0 && (
+			<span className="badge">{notificationCount}
+			</span>
+		)}
+	  	
 	  </div>
 	  <div className="top_div" id="user_wallet">
 	  	<div id="profile_img">
-	  		<span>{walletBalance ?? "0"} USDC</span>
+	  		<span>{Number(walletBalance).toFixed(2) ?? "0"} USDC</span>
 	  	</div>
 	  	<div id="_wallet">
 	  		<span>{ trimAddress }</span><span><button className="copy_link" onClick={ copyAddress }>{isCopied ? "Copied!" : <FaRegClone />}</button></span>
@@ -80,15 +123,15 @@ function Sidebar() {
 			{isOpen && <div id="logo_box"><span className="_name"><img src= {logo} className ="logo_icon" /></span></div>}
 			{isOpen && <hr />}
 			<ul className="sidebar_links">
-				<li><Link to="/dashboard"><FaHome />{isOpen && <span className="sidebar_link">Dashboard</span>}</Link></li><br />
+				<li><Link to="/"><FaHome />{isOpen && <span className="sidebar_link">Home</span>}</Link></li><br />
 
-				<li><button type="button" onClick={showUsdc} ><FaPaperPlane />{isOpen && <span className="sidebar_link">Send USDC</span>}</button></li><br />
+				<li><button className="sidebar_btn" type="button" onClick={showUsdc} ><FaPaperPlane />{isOpen && <span className="sidebar_link">Send USDC</span>}</button></li><br />
 				{isSend && (<SendTransaction closeUsdc={closeUsdc} />)}
 
 				<li><Link to="/transactions"><FaExchangeAlt />{isOpen && <span className="sidebar_link">Transactions</span>}</Link></li><br />
 				<li><Link to="/payment"><FaDollarSign />{isOpen && <span className="sidebar_link">Payment</span>}</Link></li><br />
 				<li><Link to="/settings"><FaCog />{isOpen && <span className="sidebar_link">Settings</span>}</Link></li><br />
-				<li><button type="button" onClick={ handleSignout }><FaSignOutAlt />{isOpen && <span className="sidebar_link">Sign out</span>}</button></li>
+				<li><button className="sidebar_btn" type="button" onClick={ handleSignout }><FaSignOutAlt />{isOpen && <span className="sidebar_link">Sign out</span>}</button></li>
 			</ul>
 			
 		
@@ -109,7 +152,6 @@ function DashboardBody() {
 	return (
 		<div id="dashboard_body">
 			<h2>Hello, {merchant?.merchant_name} </h2>
-			<p>Balance:{walletBalance ?? "0"} USDC</p>
 			<p>Receive USDC payment Instantly from anywhere through simple payment links</p>
 			<button id="generate_link" onClick={showModal}>Generate Payment Link</button>
 		
@@ -121,32 +163,44 @@ function DashboardBody() {
 function TotalTxn() {
 	const {invoiceStats, walletBalance} = useMerchant();
         return (
-                <div id="txn_boxes" className="clearfix">
-			<p>See what is happening in your business today</p>
+                <div className="transactions">
+		    <h3>Your Activity</h3>
+		    <div id="txn_boxes" className="clearfix">
+			<div className="usdc_box">
+				<img className="usdc_1" src={usdc} />
+			</div>
+			<br />
+			<br />
                         <div className ="txn_box" id="total_inv">
-				<p className="txn_fa_icons"><FaFileInvoiceDollar /></p>
-                                <span>Total Invoices</span><br />
-				<h3>{invoiceStats?.totalInvoices}</h3>
-                                <span>Total invoices generated</span>
+				<span className="txn_fa_icons"><FaFileInvoiceDollar style={{color: "orange"}} size="2em" /></span><br /><br />
+				<span className="invoice_value">{invoiceStats?.totalInvoices ?? "0"}</span><br />
+                                <span>Total invoices generated</span><br />
                         </div>
                         <div className="txn_box" id="wallet_balance">
-				<p className="txn_fa_icons"><FaWallet style={{color: "blue" }}/></p>
-                                <span>Wallet Balance</span>
-                                <h3>{walletBalance ?? "0"} USDC</h3>
+				<span className="txn_fa_icons"><FaWallet style={{color: "dodgerblue" }} size="2em"/></span><br /><br />
+                            
+                                <span className="invoice_value">{Number(walletBalance).toFixed(2) ?? "0"} USDC</span><br />
+				<span>Wallet Balance</span><br />
 			
                         </div>
 			<div className="txn_box" id="paid_inv">
-				<p className="txn_fa_icons"><FaCoins /> </p>
-                                <span>Total Volume</span>
-                                <h3>{invoiceStats?.totalVolume} USDC</h3>
-				<span>Custumers payments</span>
+				<span className="txn_fa_icons"><FaCoins style={{color: "green" }} size="2em" /> </span><br /><br />
+                                
+                                <span className="invoice_value">{Number(invoiceStats?.totalVolume).toFixed(2) ?? "0"} USDC</span><br />
+				<span>Total Volume</span>
                         </div>
                         <div className="txn_box" id="unpaid_inv">
-				<p className="txn_fa_icons"><FaClock /></p>
-                                <span>Receivables</span>
-                                <h3>{invoiceStats?.receivables} USDC</h3>
+				<span className="txn_fa_icons"><FaClock style={{color: "purple" }} size="2em" /></span><br /><br />
+                            
+                                <span className="invoice_value">{Number(invoiceStats?.receivables).toFixed(2) ?? "0"} USDC</span><br />
 				<span>Pending invoices</span>
                         </div>
+			<br />
+			<br />
+		    </div><br />
+		    <br />			
+		    <button className="view_transactions">View Transactions <FaArrowRight /></button>
+		    <br /><br />
                 </div>
         );
 }

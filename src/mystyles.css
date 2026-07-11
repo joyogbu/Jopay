@@ -46,7 +46,7 @@
 }
 
 #landing_one {
-	background:CornFlowerBlue;
+	background:dodgerblue;
 	/*background-image:url('images/image_back.jpeg');*/
 	color:white;
 	text-align:center;
@@ -68,7 +68,7 @@
 	border:1px solid none;
 	padding:10%;
 	text-align:center;
-	background:lightblue;
+	background:none;
 }
 
 .landing_two_intro {
@@ -182,10 +182,44 @@
 #notis {
 	width:15%;
 	text-align:center;
+	position:relative;
 	padding:auto;
 	margin-top:15px;
 }
 
+#notification_bell {
+	border:none;
+	background:none;
+}
+.badge {
+	color:red;
+}
+.notification_div {
+	position:absolute;
+	width:350px;
+	right:0;
+	padding:5%;
+	z-index:999;
+	margin-top:80px;
+	background:white;
+	
+	height: auto;
+	border:1px solid lightgrey;
+	color: grey;
+	opacity: 0;
+
+	transform: translateY(-15px);
+	visibility: hidden;
+	transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+
+}
+
+
+.notification_div.show_notis {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+}
 
 .confirmation_div {
 	padding: 10%;
@@ -215,6 +249,7 @@
 	width:40%;
 	color:white;
 	padding:3%;
+	font-weight:bold;
 	right:1px;
 	background:burlywood;
 	border-radius:8px;
@@ -252,7 +287,8 @@
 }
 
 #generate_link {
-	background:BurlyWood;
+	background:burlywood;
+	font-weight: bold;
 	border:none;
 	padding:5%;
 	border-radius:8px;
@@ -289,6 +325,11 @@
 .open {
 	width:70%;
 	padding-left:6%;
+	z-index: 999;
+}
+.sidebar_btn {
+	background:none;
+	border:none;
 }
 
 .close {
@@ -322,38 +363,70 @@ li {
 a {
 	text-decoration:none;
 }
-
+.transactions {
+	justify-content:center;
+	margin-left:15%;
+	margin-right: 5%;
+}
 #txn_boxes {
 	border:1px solid lightgrey;
 	border-radius:5px;
 	padding:10px;
-	
-	margin-left:15%;
+	text-align:left;
 	color:grey;
+	overflow:auto;
 }
 
 .txn_box {
 	border:1px solid lightgrey;
 	width:45%;
 	position:relative;
+	text-align:center;
 	height:170px;
 	float:left;
 	padding:10px;
 	border-radius:5px;
 	color:grey;
+	margin-bottom:20px;
+	background:lightyellow;
+}
+
+.usdc_box {
+	width:70px;
+	height:70px;
+	margin: auto;
+	border: 3px solid none;
+}
+
+.usdc_1 {
+	width:100%;
+}
+
+.view_transactions {
+	border:none;
+	width:100%;
+	margin:auto;
+	background:dodgerblue;
+	color:white;
+	padding:4%;
+	border-radius:5px;
 }
 
 .txn_fa_icons {
-	position:absolute;
-	top:3px;
-	right:3px;
+	margin:auto;
+}
+
+.invoice_value {
+	font-size:1.2em;
+	color:black;
+	font-weight:bold;
 }
 
 .txn_box:not(:last-child) {
 	margin-right:5%;
 }
 
-.clearfix::after, .or_div::after, #dashboard_top_div::after, .landing_menu_div {
+.clearfix::after, .or_div::after, #dashboard_top_div::after, .landing_menu_div, #txn_boxes::after {
   content: "";
   display: table;
   clear: both;
@@ -396,6 +469,17 @@ a {
 	background:white;
 	width:100%;
 	padding:10%;
+}
+
+.wallet_warning {
+	color:red;
+	font-size:10px;
+}
+
+.reconnect_wallet {
+	border:none;
+	background: none;
+	color:dodgerblue;
 }
 
 #close_btn {
@@ -541,12 +625,14 @@ hr {
 	font-weight:bold;
 }
 
-#pay_btn:disabled {
+#pay_btn:disabled, #gen_link_btn:disabled{
 	background-color:grey;
 	cursor:not-allowed;
 	opacity:0.7;
 }
-
+#pay_btn:active, #release_usdc_btn:active, #send_usdc_btn:active, #pay_connect_btn:active, #generate_link, #gen_link_btn:active, #sign_up_btn:active, .view_transactions:active {
+	transform: scale(0.95);
+}
 .payment_error {
 	color:red;
 }
@@ -618,7 +704,7 @@ hr {
 	font-weight:bold;
 	color:black;
 }
-#share_btn {
+#release_usdc_btn {
 	padding:5%;
 	width:100%;
 	border-radius:10px;

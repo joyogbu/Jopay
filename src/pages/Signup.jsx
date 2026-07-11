@@ -51,23 +51,28 @@ function Signup() {
 			setInputError("Enter a valid email");
 			return;
 		}
-		const {data, error} = await supabase.auth.signInWithOtp({
-			email: formData.merchant_email,
-			options: {
-				emailRedirectTo: `${window.location.origin}/auth/callback`
-				//emailRedirectTo: "http://localhost:5173/auth/callback"
-			}
-		})
+		try {
+			const {data, error} = await supabase.auth.signInWithOtp({
+				email: formData.merchant_email,
+				options: {
+					emailRedirectTo: `${window.location.origin}/auth/callback`
+				
+				}
+			});
 		
 
-		if(error) {
-			console.log("My error:", error);
-			setInputError(error);
-			return;
+			if(error) {
+				console.log("My error:", error);
+				setInputError(error.message);
+				return;
+			}
+			console.log("data:", data);
+			console.log("error:", error);
+			navigate("/signup/confirmation");
+		} catch (err) {
+			console.error(err);
+			setInputError("Something went wrong, try again ");
 		}
-		console.log("data:", data);
-		console.log("error:", error);
-		navigate("/signup/confirmation");
 	}
 			
 
@@ -76,9 +81,9 @@ function Signup() {
 		<>
 		<div id="sign_up">
 			<h1>JoPay</h1>
-			<h2>Create an account and receive USDC payments in seconds</h2>
+			<h2>Sign up or Sign in to receive USDC payments in seconds</h2>
 			<form onSubmit={submitForm}>
-				<h3>Step 1: Create Account</h3>
+				<h3>Step 1</h3>
 				
 				<label>Email:</label><br /><br />
 				<input type="email" placeholder="Enter your email" name="merchant_email" value={formData.merchant_email} onChange={handleForm}></input><br /><br />
@@ -86,10 +91,7 @@ function Signup() {
 				<br />
 				<button className="sign_up_btn" type="submit" value="Create Account">Create Account</button><br /><br />
 			</form><br />
-			<div className="form_question">
-				Already have an account? 
-				<Link to="/login">Sign In</Link>
-			</div><br />
+			
 			<div className ="email_overlay">
 				<div className="email_message_box">
 		

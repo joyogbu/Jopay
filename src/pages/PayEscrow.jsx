@@ -198,7 +198,7 @@ function PayInvoice() {
                                 navigate(`/pay/receipt?invoiceId=${invoiceId}&txHash=${depositHash}`
 				);
 				
-                        }, 2000);
+                        }, 4000);
                 };
                 updateInvoice();
         }, [depositHash, navigate, depositSuccess, invoiceId]);
@@ -222,7 +222,7 @@ function PayInvoice() {
 	};
 
 	const buttonStyle = {
-                backgroundColor: isClicked ? 'lightblue' : 'Cornflowerblue',
+                backgroundColor: isClicked ? 'grey' : 'lightgrey',
                 cursor:'pointer',
         }
 
