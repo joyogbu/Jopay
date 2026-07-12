@@ -5,7 +5,8 @@ import Footer from '../components/Footer.jsx';
 
 function CompleteSignup() {
 	const navigate = useNavigate();
-	const [ merchant, setMerchant ] = useState(null)
+	const [ merchant, setMerchant ] = useState(null);
+	const [pageStatus, setPageStatus] = useState("");
 	
 	useEffect(() => {
 
@@ -70,16 +71,16 @@ function CompleteSignup() {
 
 		if (error) {
 			console.log("create merchant error:", error);
-			//setStatus("Failed to create merchant");
+			setPageStatus("Failed to create account");
 			return;
 		
 		}
 		console.log("Merchant created");
-		//setStatus("Success!, redirecting");
+		setPageStatus("Account created... redirecting to generate wallet");
 
 		// redirect user to the dashboard
-		setTimeout(() => {navigate( "/dashboard");
-		}, 9000 );
+		setTimeout(() => {navigate("/signup/wallet-setup");
+		}, 3000 );
 	}
 
 
@@ -88,6 +89,8 @@ function CompleteSignup() {
                 <div id="sign_up">
                         <h1>JoPay</h1>
 			<h2>Continue with setting up your Account</h2>
+			<p>{pageStatus}</p>
+			{pageStatus.includes("Failed") && (<button className="retry" onClick={submitForm}>Retry</button>)}	
                         <form onSubmit= {submitForm }>
                                 <h3>Step 2: Complete Sign Up</h3>
                                
@@ -96,7 +99,7 @@ function CompleteSignup() {
                                 <label>Business Country:</label><br />
                                 <input type="text" placeholder="Country" name="merchant_address" value={formData.merchant_address} onChange={handleForm}></input><br /><br />
 
-                                <button type="submit" value="continue">Continue</button><br /><br />
+                                <button className="continue" type="submit" value="continue">Continue</button><br /><br />
                         </form><br />
 		</div>
 		<Footer />

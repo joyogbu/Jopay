@@ -39,7 +39,7 @@ export function WalletSetup() {
 		setPagestatus("Setting up your profile...");
 
 		setTimeout(async () => {await initializeUser();
-		}, 5000 );
+		}, 3000 );
 	}
                     
 

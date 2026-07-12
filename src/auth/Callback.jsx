@@ -6,10 +6,13 @@ export default function AuthCallback() {
 	const navigate = useNavigate();
 	const [status, setStatus] = useState("Loading...");
 	useEffect(() => {
+		console.log("Current URL:", window.location.href);
+
 		const handleAuth = async () => {
 			try {
 				//get session from magic link
 				const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+				console.log("Session result:", sessionData);
 				if(sessionError) {
 					console.error(sessionError);
 					setStatus("Authentication failed");
@@ -20,8 +23,11 @@ export default function AuthCallback() {
 				}
 				const session = sessionData.session;
 
+				const { data: userData } = await supabase.auth.getUser();
+				console.log("User:", userData);
+
 				if(!session) {
-					setStatus("No account found");
+					setStatus("User session could not be started");
 					console.log("no session");
 					setTimeout(() => {
 						navigate("/signup");

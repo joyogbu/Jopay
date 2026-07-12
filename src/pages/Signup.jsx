@@ -89,7 +89,7 @@ function Signup() {
 				<input type="email" placeholder="Enter your email" name="merchant_email" value={formData.merchant_email} onChange={handleForm}></input><br /><br />
 				{inputError && <p style={{ color:"red" }}>{inputError}</p>}
 				<br />
-				<button className="sign_up_btn" type="submit" value="Create Account">Create Account</button><br /><br />
+				<button className="sign_up_btn" type="submit" value="Create Account">Continue</button><br /><br />
 			</form><br />
 			
 			<div className ="email_overlay">
