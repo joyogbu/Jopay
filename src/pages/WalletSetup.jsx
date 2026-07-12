@@ -23,8 +23,30 @@ export function WalletSetup() {
 		setup();
 	}, []);
 
+
+
+
+	async function invokeWithRetry(functionName, options = {}, retries = 3) {
+		let lastError;
+
+		for (let attempt = 1; attempt <= retries; attempt++) {
+			const { data, error } = await supabase.functions.invoke(functionName, options);
+			if (!error) {
+				return { data, error: null };
+			}
+
+			lastError = error;
+			console.log(`${functionName} failed (Attempt ${attempt}/${retries})`, error);
+
+			//Wait before retrying
+			await new Promise(resolve => setTimeout(resolve, 1500));
+		}
+		return { data: null, error: lastError };
+	}
+
+
 	async function createCircleUser() {
-		const { data: dataUser, error: errorUser } = await supabase.functions.invoke("create-circle-user");
+		const { data: dataUser, error: errorUser } = await invokeWithRetry("create-circle-user");
 		if (errorUser) {
 			console.error(errorUser);
 			return;
@@ -47,9 +69,7 @@ export function WalletSetup() {
 
 	async function initializeUser()  {
 		console.log("user initialization started");
-		const {data, error} = await supabase.functions.invoke(
-			"initialize-circle-user"
-		);
+		const {data, error} = await invokeWithRetry("initialize-circle-user");
 		if(error || !data) {
 			return;
 		}
@@ -96,7 +116,7 @@ export function WalletSetup() {
 	
 	async function syncWallet() {
 		console.log("sync wallet started");
-		const {data: syncData, error: syncError} = await supabase.functions.invoke("sync-circle-wallet");
+		const {data: syncData, error: syncError} = await invokeWithRetry("sync-circle-wallet");
 		console.log("syncWallet response:", syncData);
 		console.log("syncWallet error:", syncError);
 
