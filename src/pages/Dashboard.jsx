@@ -8,6 +8,7 @@ import { MerchantProvider, useMerchant, } from '../auth/MerchantContext.jsx';
 import Footer from '../components/Footer.jsx';
 import logo from '../images/logo2.png'
 import usdc from '../images/usdc1.png'
+import jopay from '../images/jopay.jpg';
 
 function DashboardHeader() {
   const {merchant, invoices, walletBalance} = useMerchant();
@@ -65,7 +66,7 @@ function DashboardHeader() {
 
 	  <div id="logo_name" className="top_div">
 	  	<div className="logo_div" id="logo">
-	  		<img src={ logo } className="_logo" />
+	  		<img src={ jopay } className="_logo" />
 
 	  	</div>
 	  </div>
