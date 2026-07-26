@@ -647,7 +647,7 @@ html {
     .open,
      {
         width: 50%;
-        padding-left: 0%
+        padding-left: 0%;
     }
     #dashboard_body, #dashboard_top_div {
         margin-left:2%;
