@@ -644,8 +644,7 @@ html {
         display:none;
     }
    
-    .open,
-     {
+    .open {
         width: 50%;
         padding-left: 0%;
     }
