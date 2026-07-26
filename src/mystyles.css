@@ -185,7 +185,7 @@ html {
 }
 
 #landing_one {
-	background:purple;
+	background:linear-gradient(to bottom, purple, plum);
 	/*background-image:url('images/image_back.jpeg');*/
 	color:white;
 	text-align:center;
@@ -196,6 +196,8 @@ html {
 
 .text_change {
 	color:dodgerblue;
+    width:100vw;
+    min-height:dvh;
 }
 
 .arc_box {
@@ -238,6 +240,36 @@ html {
 .text_change_b {
 	color:black;
 	font-weight:bold;
+}
+
+.home_stats {
+    display:flex;
+    flex-wrap:wrap;
+    gap:2rem;
+    border:1px solid lightgrey;
+    padding:5%;
+}
+
+.stats_box {
+    text-align:center;
+    align-items:center;
+    justify-content: center;
+    flex:0 0 calc(50% - 1rem);
+    flex-direction:column;
+    border-radius:10px;
+    padding:3%;
+    color:grey;
+    border:1px solid none;
+}
+
+.stats_label {
+    color:dodgerblue;
+    font-weight:bold;
+    font-size:clamp(2rem, 2.5vh, 2.5rem);
+}
+
+.stats_value {
+    font-size:clamp(1rem, 1vh, 1.5rem);
 }
 
 #how-it-works, ._how {
@@ -343,7 +375,7 @@ html {
 }
 
 ._start, .learn_more {
-	background:BurlyWood;
+	background:linear-gradient(to right, chocolate, lightyellow);
 	border:none;
 }
 
@@ -396,16 +428,19 @@ html {
 }
 
 #dashboard_page {
+    display:flex;
+    min-height:100vh;
 	border:1px solid none;
 	position:relative;
 }
 
 #dashboard_top_div {
-	border-bottom:2px solid lightgrey;
-
+	border-bottom:2px solid none;
+    box-shadow:2px 2px 2px 5px lightgrey;
+    background:white;
 	margin-left:12%;
 	height:auto;
-	background:none;
+	
 }
 
 .top_div {
@@ -416,7 +451,7 @@ html {
 #logo_name {
 	width:40%;
 	text-align:center;
-	border:1px solid none;
+	margin-top:2%;
 }
 
 #notis {
@@ -429,7 +464,8 @@ html {
 
 #notification_bell {
 	border:none;
-	background:none;
+	background:white;
+    font-size:clamp(1rem, 4vw, 1.5rem);
 }
 .badge {
 	color:red;
@@ -439,7 +475,7 @@ html {
 	width:350px;
 	right:0;
 	padding:5%;
-	z-index:999;
+	z-index:99;
 	margin-top:80px;
 	background:white;
 	
@@ -543,13 +579,16 @@ html {
 	height:100%;
 	position: fixed;
 	top:0;
+    font-size:clamp(0.5rem, 2vh, 1rem);
 }
-
+.sidebar {
+    left:0;
+}
 .sidemenu {
 	right:0;
 	border-left:1px solid lightgrey;
 	padding:6%;
-	z-index:1000;
+	/*z-index:99999;*/
 
 }
 .sidebar_link {
@@ -565,7 +604,7 @@ html {
 .open {
 	width:70%;
 	padding-left:6%;
-	z-index: 999;
+	z-index: 99999;
 }
 .sidebar_btn {
 	background:none;
@@ -578,6 +617,7 @@ html {
 	position:fixed;
 	height:100%;
 	padding-left:4%;
+    z-index:9999;
 }
 
 .floated {
@@ -588,6 +628,32 @@ html {
 
 .logo_icon {
 	width:40%;
+}
+
+@media screen and (min-width: 860px) {
+    .sidemenu, .open{
+        font-size:clamp(1rem, 4vw, 1.5rem);
+    }
+    .sidebar {
+        position:sticky;
+        width:30%;
+        overflow:visible;
+        z-index:1;
+    }
+    .bttn_right {
+        display:none;
+    }
+   
+    .open,
+     {
+        width: 50%;
+        padding-left: 0%
+    }
+    #dashboard_body, #dashboard_top_div {
+        margin-left:2%;
+    }
+  
+   
 }
 
 ul {
@@ -666,6 +732,12 @@ a {
 	margin-right:5%;
 }
 
+@media screen and (min-width: 860px) {
+    .transactions {
+        margin-left:2%;
+    }
+}
+
 .clearfix::after, .or_div::after, #dashboard_top_div::after, #txn_boxes::after {
   content: "";
   display: table;
@@ -685,7 +757,7 @@ a {
 	height:100%;
 	position:fixed;
 	display:flex;
-	z-index:1000;
+	z-index:99999;
 	color:black;
 	border:1px solid none;
 	top:0;
@@ -698,8 +770,11 @@ a {
 	border-radius:10px;
 	background:white;
 	width:95%;
+    max-height:90vh;
 	padding:5%;
 	margin:5%;
+    z-index:99999;
+    overflow-x: auto;
 }
 
 .connect_wallet_modal {
@@ -708,6 +783,7 @@ a {
 	border-radius:10px;
 	background:white;
 	width:100%;
+    
 	padding:10%;
 }
 

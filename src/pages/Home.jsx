@@ -64,7 +64,7 @@ function Home() {
                                
                                 
                                 <p className="heading_2">
-                                        Create an invoice, generate a payment link <span className="text_change">and receive USDC </span>instantly from anywhere
+                                        Create an invoice, generate a payment link <span className="text_change">share link on whatsapp, and receive USDC </span>instantly from anywhere
                                 </p>
 
                                 <br />
@@ -72,9 +72,29 @@ function Home() {
                                     <Link to ="/signup" className="landing_bttn _start" >START HERE
                                     </Link>
                                     <br />
-                                    <button type="button" className="landing_bttn _demo">REQUEST A DEMO</button>
+                                    <Link to="/signup" className="landing_bttn _demo">REQUEST A DEMO</Link>
                                 </div>
                         </div>
+                    <br /><br />
+                    <div className="home_stats">
+                        <div className="stats_box">
+                            <span className="stats_label">10</span><br />
+                            <span className="stats_value">Total Businesses</span>
+                        </div>
+                        <div className="stats_box">
+                            <span className="stats_label">106</span><br />
+                            <span className="stats_value">Total invoice generated</span>
+                        </div>
+                        <div className="stats_box">
+                            <span className="stats_label">75, 000</span><br />
+                            <span className="stats_value">Transaction Volume</span>
+                        </div>
+                        <div className="stats_box">
+                            <span className="stats_label">1</span><br />
+                            <span className="stats_value">Total countries</span>
+                        </div>
+                    </div>
+                    <br />
                     <div className="landing_two_intro">
 				        <div clasaName="intro_1">
 					        <img id="usdc_img" src={bg} />
@@ -105,7 +125,7 @@ function Home() {
                         <p className="closing_text">Create a payment link in 30 seconds to see how it works.</p>
                         <h2>The easiest way to receive USDC payments in Africa.</h2>
                         <br />
-                        <button className="landing_bttn _start">Generate Link</button><br /><br />
+                        <Link className="landing_bttn _start">Generate Link</Link><br /><br />
                     </div>
                     <div className="jopay_img_div">
                         <img src={image4} id="jopay_img" />

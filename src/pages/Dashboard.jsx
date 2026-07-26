@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaCog, FaExchangeAlt, FaArrowRight, FaRegClone, FaDollarSign, FaFileInvoiceDollar, FaSignOutAlt, FaUser, FaBell, FaWallet, FaCoins, FaCheckCircle, FaClock, FaHistory, FaPaperPlane } from 'react-icons/fa';
 import { supabase } from '../lib/supabase.js';
@@ -6,7 +6,7 @@ import PaymentLink from '../components/PaymentLink.jsx';
 import SendTransaction from '../components/SendTransaction.jsx';
 import { MerchantProvider, useMerchant, } from '../auth/MerchantContext.jsx';
 import Footer from '../components/Footer.jsx';
-import logo from '../images/logo2.png'
+import logo from '../images/jopay.jpg'
 import usdc from '../images/usdc1.png'
 import jopay from '../images/jopay.jpg';
 
@@ -96,7 +96,19 @@ function Sidebar() {
 	const [isSend, setIsSend] = useState(false);
 
 	const navigate = useNavigate();
-	
+
+    useEffect(() => {
+    const handleResize = () => {
+        setIsOpen(window.innerWidth >= 768);
+    };
+
+    handleResize(); // run once on mount
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+}, []);
+
 	//Display the send transaction modal box
 	function showUsdc() {
 		setIsSend(true);
@@ -117,7 +129,7 @@ function Sidebar() {
 	};
 
 	return (
-		<div className = {isOpen ? "sidebar open" : "close"}>
+		<div className = {`sidebar ${isOpen ? "open" : "close"}`}>
 			<br />
 			<span><button className="bttn_right" onClick = { toggle }> {isOpen ? "✕" : "☰"}</button></span>
 			<br />	<br />	
@@ -129,7 +141,7 @@ function Sidebar() {
 				<li><button className="sidebar_btn" type="button" onClick={showUsdc} ><FaPaperPlane />{isOpen && <span className="sidebar_link">Send USDC</span>}</button></li><br />
 				{isSend && (<SendTransaction closeUsdc={closeUsdc} />)}
 
-				<li><Link to="/transactions"><FaExchangeAlt />{isOpen && <span className="sidebar_link">Transactions</span>}</Link></li><br />
+				<li><Link to="/transactions"><FaExchangeAlt /> {isOpen && <span className="sidebar_link">Transactions</span>}</Link></li><br />
 				<li><Link to="/payment"><FaDollarSign />{isOpen && <span className="sidebar_link">Payment</span>}</Link></li><br />
 				<li><Link to="/settings"><FaCog />{isOpen && <span className="sidebar_link">Settings</span>}</Link></li><br />
 				<li><button className="sidebar_btn" type="button" onClick={ handleSignout }><FaSignOutAlt />{isOpen && <span className="sidebar_link">Sign out</span>}</button></li>
@@ -244,12 +256,15 @@ function Display() {
 		<MerchantProvider>
 			<div id="dashboard_page">
 				<Sidebar />
-				<DashboardHeader />
-				<DashboardBody />			
-				<TotalTxn />
-				
-				<Footer />	
-			</div>
+
+                <div className="dashboard_content">
+				    <DashboardHeader />
+				    <DashboardBody />			
+				    <TotalTxn />
+				</div>
+            </div>
+			<Footer />	
+			
 		</MerchantProvider>
 	);
 }

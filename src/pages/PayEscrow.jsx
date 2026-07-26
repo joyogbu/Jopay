@@ -9,7 +9,7 @@ import { useWallet } from '../Wallet.jsx';
 import { usdcAbi } from '../abi/usdcabi';
 import { escrowAbi } from "../abi/escrowAbi";
 
-import logo from '../images/logo.png';
+import logo from '../images/jopay.jpg';
 
 function PayInvoice() {
         const {invoiceId} = useParams();
@@ -247,9 +247,9 @@ function PayInvoice() {
                                 {isOpen && <div>
                                         <p>View History</p>
                                         <p>Settings</p>
-                                        <div class="wallet_balance"><p>Wallet Balance</p><p>23,000 USDC</p></div>
+                                        <div class="wallet_balance"><p>Wallet Balance</p><p>0 USDC</p></div>
                                         <br /><br />
-                                        <p><button id="_disconnect" type="button" onClick={disconnect} >Disconnect</button></p>
+                                        <p><button id="_disconnect" type="button" onClick={disconnect} >{isConnected ? "Disconnect" : "Connect Wallet"}</button></p>
                                 </div>}
                         </div>
 
