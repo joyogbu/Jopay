@@ -130,21 +130,26 @@ function Sidebar() {
 
 	return (
 		<div className = {`sidebar ${isOpen ? "open" : "close"}`}>
+            <div id="logo_box">
+                {isOpen && <span className="_name"><img src= {logo} className ="logo_icon" /></span>}
+			    <span><button className="bttn_right" onClick = { toggle }> {isOpen ? "✕" : "☰"}</button></span>
+            </div>
 			<br />
-			<span><button className="bttn_right" onClick = { toggle }> {isOpen ? "✕" : "☰"}</button></span>
-			<br />	<br />	
-			{isOpen && <div id="logo_box"><span className="_name"><img src= {logo} className ="logo_icon" /></span></div>}
+			
 			{isOpen && <hr />}
+            
 			<ul className="sidebar_links">
-				<li><Link to="/"><FaHome />{isOpen && <span className="sidebar_link">Home</span>}</Link></li><br />
+				<li className="link_flex"><Link to="/"><FaHome />{isOpen && <span className="sidebar_link">Home</span>}</Link></li>
+                
 
-				<li><button className="sidebar_btn" type="button" onClick={showUsdc} ><FaPaperPlane />{isOpen && <span className="sidebar_link">Send USDC</span>}</button></li><br />
+				<li className="link_flex"><div className="sidebar_btn" type="button" onClick={showUsdc} ><FaPaperPlane />{isOpen && <span className="sidebar_link">Send USDC</span>}</div></li>
 				{isSend && (<SendTransaction closeUsdc={closeUsdc} />)}
-
-				<li><Link to="/transactions"><FaExchangeAlt /> {isOpen && <span className="sidebar_link">Transactions</span>}</Link></li><br />
-				<li><Link to="/payment"><FaDollarSign />{isOpen && <span className="sidebar_link">Payment</span>}</Link></li><br />
-				<li><Link to="/settings"><FaCog />{isOpen && <span className="sidebar_link">Settings</span>}</Link></li><br />
-				<li><button className="sidebar_btn" type="button" onClick={ handleSignout }><FaSignOutAlt />{isOpen && <span className="sidebar_link">Sign out</span>}</button></li>
+                
+				<li><Link to="/transactions"><FaExchangeAlt />{isOpen && <span className="sidebar_link">Transactions</span>}</Link></li>
+				<li className="link_flex"><Link to="/payment"><FaDollarSign />{isOpen && <span className="sidebar_link">Payment</span>}</Link></li>
+				<li className="link_flex"><Link to="/settings"><FaCog />{isOpen && <span className="sidebar_link">Settings</span>}</Link></li>
+                
+				<li className="link_flex"><div className="sidebar_btn" type="button" onClick={ handleSignout }><FaSignOutAlt />{isOpen && <span className="sidebar_link">Sign out</span>}</div></li>
 			</ul>
 			
 		
@@ -164,9 +169,10 @@ function DashboardBody() {
 	}
 	return (
 		<div id="dashboard_body">
+            
 			<h2>Hello, {merchant?.merchant_name} </h2>
 			<p>Receive USDC payment Instantly from anywhere through simple payment links</p>
-			<button id="generate_link" onClick={showModal}>Generate Payment Link</button>
+            <div className="btn_flex flex_b"><button  onClick ={showModal} className="landing_bttn _demo">Generate Link </button><span className="btn_arrow"><FaArrowRight /></span></div>
 		
 			{isModal && (<PaymentLink closeModal={closeModal} />)}
 		</div>

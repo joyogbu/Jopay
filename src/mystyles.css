@@ -50,13 +50,14 @@ html {
     text-align:right;
 }
 .menu_start {
-    background: burlywood;
+    background: rgb(51, 153, 102);
     padding: 7% 10% 7% 10%;
     color: black;
     overflow:hidden;
     font-size: clamp(1rem, 2.5vw, 1.5rem);
-    border-radius:12px;
+    border-radius:15px;
     border:none;
+    width:auto;
 }
 
 .landing_menu_bar {
@@ -85,14 +86,15 @@ html {
 
 .landing_bttn, .learn_more {
         font-family: Arial, Helvetica, sans-serif;
-        padding:4%;
-        border-radius:15px;
+        /*padding:3% 4%;
+        border-radius:15px;*/
         /*width:auto;*/
         font-weight:bold;
-        font-size:clamp(1rem, 3vw, 1.5rem);
-        color:white;
+        font-size:clamp(1rem, 2vw, 1.5rem);
+        border:none;
+        background:rgb(51, 153, 102);    
         text-align:center;
-        flex: 1;
+        /*flex: 1;*/
 }
 
 @media screen and (min-width: 560px) {
@@ -185,9 +187,9 @@ html {
 }
 
 #landing_one {
-	background:linear-gradient(to bottom, purple, plum);
+	background:linear-gradient(to bottom, rgb(230, 255, 250), white);
 	/*background-image:url('images/image_back.jpeg');*/
-	color:white;
+	color:black;
 	text-align:center;
 	padding:10%;
 	/*background-size:cover;
@@ -195,16 +197,16 @@ html {
 }
 
 .text_change {
-	color:dodgerblue;
+	color:rgb(51, 153, 102);
     width:100vw;
     min-height:dvh;
 }
 
 .arc_box {
     display:flex;
-    border:1px solid lightgreen;
+    border:1px solid rgb(51, 153, 102);
     border-radius: 20px;
-    color:lightgreen;
+    color:rgb(51, 153, 102);
     justify-content:center;
     align-items: center;
     gap: 5px;
@@ -227,6 +229,8 @@ html {
 
 .heading_2 {
     font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color:grey;
+    line-height:30px;
 }
 
 .heading_3 {
@@ -242,14 +246,19 @@ html {
 	font-weight:bold;
 }
 
+.btn_flex {
+    display:flex;
+    gap:0.5rem;
+}
 .home_stats {
     display:flex;
     flex-wrap:wrap;
     gap:2rem;
     border:1px solid lightgrey;
     padding:5%;
+    text-align:center;
 }
-
+.
 .stats_box {
     text-align:center;
     align-items:center;
@@ -258,22 +267,26 @@ html {
     flex-direction:column;
     border-radius:10px;
     padding:3%;
-    color:grey;
     border:1px solid none;
 }
 
 .stats_label {
-    color:dodgerblue;
+    color:black;
     font-weight:bold;
-    font-size:clamp(2rem, 2.5vh, 2.5rem);
+    font-size:clamp(2rem, 2vh, 2.5rem);
 }
 
 .stats_value {
     font-size:clamp(1rem, 1vh, 1.5rem);
+    color:grey;
 }
 
 #how-it-works, ._how {
-    margin:3%;
+    margin:1% 13%;
+    color:grey;
+}
+#how-it-works {
+    color:rgb(51, 153, 102);
 }
 
 #landing_two {
@@ -313,11 +326,13 @@ html {
 
 .landing_feature {
     flex: 0 0 100%;
-	padding:10%;
-	box-shadow:2px 2px 4px lightgrey;
-	border-bottom:4px solid BurlyWood;
-	border-radius:5px;
-	background:white;
+	padding:3% 10%;
+	/*box-shadow:2px 2px 4px lightgrey;
+	border-bottom:4px solid BurlyWood;*/
+    border:1px solid lightgrey;
+	border-radius:15px;
+	background:linear-gradient(to right, rgb(230, 255, 250), white);
+    color:grey;
 }
 
 @media screen and (min-width: 860px) {
@@ -354,7 +369,7 @@ html {
     }
     .intro_text {
         padding:3%;
-        background:purple;
+        background:white;
         justify-content:center;
         align-items: center;
         font-size:clamp(1rem, 3vw, 1.5rem);
@@ -374,21 +389,35 @@ html {
 	border-radius:50%;
 }
 
-._start, .learn_more {
-	background:linear-gradient(to right, chocolate, lightyellow);
+.btn_flex, ._closing_start {
+	background:rgb(51, 153, 102);
 	border:none;
+    color:black;
+    border-radius:15px;
+    justify-content:center;
+    align-items:center;
+    padding:4%;
 }
 
-._demo{
-	background:none;
-	border:2px solid BurlyWood;
+.btn_arrow {
+    justify-content:center;
+    align-items:center;
+    font-weight:normal;
 }
 
+.flex_b {
+    color:black;
+	background:linear-gradient(to right, rgb(230, 255, 250), white);
+	border:2px solid rgb(51, 153, 102);
+}
+._demo {
+    background:none;
+}
 .learn_more {
-	background:dodgerblue;
+	background:rgb(51, 153, 102);
 }
 .landing_closing {
-	background:black;
+	background:rgb(30, 30, 0);
     margin:3%;
     border-radius:20px;
     border:3px solid none;	
@@ -397,9 +426,11 @@ html {
 }
 
 .landing_closing_b {
-	padding:10%;
+	padding:10%;color:grey;
 }
-
+.closing_text {
+    color:rgb(51, 153, 102);
+}
 .jopay_img_div {
 	height:260px;
 	border:3px solid none;
@@ -429,37 +460,43 @@ html {
 
 #dashboard_page {
     display:flex;
+    gap:1rem;
     min-height:100vh;
 	border:1px solid none;
 	position:relative;
 }
-
+#dashboard_page > *{
+    flex:1;
+}
 #dashboard_top_div {
-	border-bottom:2px solid none;
-    box-shadow:2px 2px 2px 5px lightgrey;
+	border-bottom:1px solid grey;
+    display:flex;
+    gap:1rem;
     background:white;
-	margin-left:12%;
+	margin-left:15%;
 	height:auto;
-	
+
 }
 
 .top_div {
 	border:1px solid none;
-	float:left;
+	/*float:left;*/
+    flex:auto;
+    flex-direction:column;
 }
 
 #logo_name {
-	width:40%;
+	/*width:40%;*/
 	text-align:center;
 	margin-top:2%;
 }
 
 #notis {
-	width:15%;
+	/*width:15%;*/
 	text-align:center;
 	position:relative;
 	padding:auto;
-	margin-top:15px;
+	margin-top:2%;
 }
 
 #notification_bell {
@@ -521,15 +558,16 @@ html {
 }
 
 #user_wallet {
-	margin-top:8px;
-	width:40%;
+	margin-top:2%;
+	/*width:40%;*/
 	color:white;
-	padding:3%;
+	padding:2%;
 	font-weight:bold;
 	right:1px;
-	background:burlywood;
-	border-radius:8px;
+	background:rgb(51, 153, 102);;
+	border-radius:15px;
 	text-align:center;
+    
 }
 
 #_wallet {
@@ -544,17 +582,17 @@ html {
 }*/
 
 ._logo {
-	width:50%;
+	width:clamp(5rem, 15vh, 8rem);
 }
 
 #dashboard_body {
 	border:1px solid lightgrey;
-	margin:10% 5% 10% 15%;
+	margin:6% 5% 6% 15%;
 	padding:10%;
 	color:white;
 	
-	background:CornFlowerBlue;
-	border-radius:10px;
+	background:rgb(30, 30, 0);
+	border-radius:15px;
 	/*text-align:center;*/
 }
 
@@ -596,9 +634,9 @@ html {
 }
 
 .bttn_right {
-	position:absolute;
+	/*position:absolute;
+	top:1px;*/
 	right:5px;
-	top:10px;
 	
 }
 .open {
@@ -608,7 +646,11 @@ html {
 }
 .sidebar_btn {
 	background:none;
-	border:none;
+	
+    text-align:left;
+    justify-content:left;
+    align-items:left;
+    
 }
 
 .close {
@@ -626,17 +668,41 @@ html {
 	top:15px;
 }
 
+#logo_box {
+    margin-top:3%;
+    display:flex;
+    gap:1rem;
+    border:2px solid none;
+}
+
 .logo_icon {
 	width:40%;
 }
+.sidebar_links {
+    border:1px solid none;
+    margin-top:15px;
+    color:grey;
+}
 
+.sidebar_links li {
+    color:grey;
+    margin-bottom:20px;
+}
+.sidebar_links a {
+    color:grey;
+}
+.link_flex {
+    color:grey;
+    display:flex;
+    gap:1rem;
+}
 @media screen and (min-width: 860px) {
     .sidemenu, .open{
         font-size:clamp(1rem, 4vw, 1.5rem);
     }
     .sidebar {
         position:sticky;
-        width:30%;
+        width:25%;
         overflow:visible;
         z-index:1;
     }
@@ -645,14 +711,30 @@ html {
     }
    
     .open {
-        width: 50%;
-        padding-left: 0%;
+        /*width: 50%;*/
+        padding-left: 1%;
+    }
+    #dashboard_page > * {
+        flex:auto;
+    }
+    .open {
+        width:clamp(3rem, 8vw, 5rem);
     }
     #dashboard_body, #dashboard_top_div {
         margin-left:2%;
+       
     }
-  
-   
+    .logo_div {
+        display:none;
+    }  
+    .logo_icon {
+        width:clamp(7rem, 11vw, 9rem);
+    }
+    #user_wallet {
+       
+        width:50px;
+    }
+ 
 }
 
 ul {
@@ -672,6 +754,8 @@ a {
 	justify-content:center;
 	margin-left:15%;
 	margin-right: 5%;
+    background:linear-gradient(to bottom,
+ rgb(230, 255, 250), white);
 }
 #txn_boxes {
 	border:1px solid lightgrey;
@@ -693,7 +777,8 @@ a {
 	border-radius:5px;
 	color:grey;
 	margin-bottom:20px;
-	background:lightyellow;
+	background:linear-gradient(to bottom,
+ rgb(230, 255, 250), white);
 }
 
 .usdc_box {
@@ -711,7 +796,7 @@ a {
 	border:none;
 	width:100%;
 	margin:auto;
-	background:dodgerblue;
+	background:rgb(51, 153, 102);
 	color:white;
 	padding:4%;
 	border-radius:5px;
@@ -921,7 +1006,7 @@ hr {
 
 #pay_connect_btn {
 	border:none;	
-	background:Burlywood;
+	background:rgb(51, 153, 102);
 	border-radius:12px;
 	color:white;
 	padding:6%;
@@ -932,7 +1017,7 @@ hr {
 
 .sign_up_btn, .sign_in_btn, #pay_btn, #gen_link_btn {
 	border:none;
-	background:Cornflowerblue;
+	background:rgb(51, 153, 102);
 	border-radius:10px;
 	width:100%;
 	padding:5%;
@@ -987,7 +1072,7 @@ hr {
 }
 
 #pay_invoice_bottom {
-	background:CornFlowerBlue;
+	background:rgb(51, 153, 102);
 	height:100px;
 	
 }
@@ -1023,7 +1108,7 @@ hr {
 	padding:5%;
 	width:100%;
 	border-radius:10px;
-	background:BurlyWood;
+	background:rgb(51, 153, 102);
 	color:white;
 	border:none;
 }
@@ -1043,7 +1128,7 @@ hr {
 
 #send_usdc_btn {
 	border:none;
-	background:dodgerblue;
+	background:rgb(51, 153, 102);
 	padding:4%;
 	color:white;
 	font-weight:bold;
