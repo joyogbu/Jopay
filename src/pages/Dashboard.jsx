@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaHome, FaCog, FaExchangeAlt, FaArrowRight, FaRegClone, FaDollarSign, FaFileInvoiceDollar, FaSignOutAlt, FaUser, FaBell, FaWallet, FaCoins, FaCheckCircle, FaClock, FaHistory, FaPaperPlane } from 'react-icons/fa';
+import { FaLink, FaChevronDown, FaHome, FaCog, FaExchangeAlt, FaArrowRight, FaRegClone, FaDollarSign, FaFileInvoiceDollar, FaSignOutAlt, FaUser, FaBell, FaWallet, FaCoins, FaCheckCircle, FaClock, FaHistory, FaPaperPlane } from 'react-icons/fa';
 import { supabase } from '../lib/supabase.js';
 import PaymentLink from '../components/PaymentLink.jsx';
 import SendTransaction from '../components/SendTransaction.jsx';
@@ -14,10 +14,11 @@ function DashboardHeader() {
   const {merchant, invoices, walletBalance} = useMerchant();
   const [copyWallet, setCopyWallet] = useState("");
   const [isCopied, setIsCopied] = useState(false);
+    const [isProfile, setIsProfile] = useState(false);
   const [isDropdown, setIsDropdown] = useState(false);
   const walletAddress = merchant?.circle_wallet_address;
   
-  const trimAddress = walletAddress ? `${walletAddress?.slice(0, 6)}...${walletAddress?.slice(-4)}` : "";
+  const trimAddress = walletAddress ? `${walletAddress?.slice(0, 3)}...${walletAddress?.slice(-2)}` : "";
   const copyAddress = async () => {
 	  await navigator.clipboard.writeText(walletAddress);
 	  setIsCopied(true);
@@ -28,13 +29,25 @@ function DashboardHeader() {
   function dropNotis() {
 	setIsDropdown(!isDropdown);
   }
+  function dropProfile() {
+        setIsProfile(!isProfile);
+  }
+  const handleSignout = async () => {
+        await supabase.auth.signOut();
+        navigate("/");
+    };
   const notifications = invoices.filter(invoice => invoice.status === "Escrowed" || invoice.status === "Paid" );
   const notificationCount = invoices.filter(invoice => invoice.status === "Escrowed").length;
 
   return (
     <div id="dashboard_top_div">
-
-
+        <div id="myProfile" className={`wallet_dropdown ${isProfile ? "show_profile" : ""}`}>
+            <h2>{Number(walletBalance).toFixed(2) ?? "0"} USDC</h2>
+            <p className="wallet_address">{walletAddress?.toLowerCase()}</p>
+            <button className="copy" onClick={ copyAddress }>{isCopied ? "Copied!" : <FaRegClone />} Copy Address</button>
+            <br /><hr />
+            <button type="button" className="wallet_disconnect" onClick={handleSignout}>Disconnect</button>
+        </div>
 
 
 
@@ -79,11 +92,9 @@ function DashboardHeader() {
 	  	
 	  </div>
 	  <div className="top_div" id="user_wallet">
-	  	<div id="profile_img">
-	  		<span>{Number(walletBalance).toFixed(2) ?? "0"} USDC</span>
-	  	</div>
+	  	
 	  	<div id="_wallet">
-	  		<span>{ trimAddress }</span><span><button className="copy_link" onClick={ copyAddress }>{isCopied ? "Copied!" : <FaRegClone />}</button></span>
+	  		<span>{ trimAddress }</span><span><button onClick={dropProfile} type="button" className="drop_btn"><FaChevronDown /></button></span>
 	  	</div>
 	  </div>
     </div>
@@ -94,6 +105,7 @@ function Sidebar() {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const [isSend, setIsSend] = useState(false);
+    const[isModal, setIsModal] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -108,6 +120,13 @@ function Sidebar() {
 
     return () => window.removeEventListener("resize", handleResize);
 }, []);
+
+    function showModal() {
+        setIsModal(true);
+    }
+    function closeModal() {
+        setIsModal(false);
+    }
 
 	//Display the send transaction modal box
 	function showUsdc() {
@@ -132,6 +151,7 @@ function Sidebar() {
 		<div className = {`sidebar ${isOpen ? "open" : "close"}`}>
             <div id="logo_box">
                 {isOpen && <span className="_name"><img src= {logo} className ="logo_icon" /></span>}
+               
 			    <span><button className="bttn_right" onClick = { toggle }> {isOpen ? "✕" : "☰"}</button></span>
             </div>
 			<br />
@@ -139,15 +159,16 @@ function Sidebar() {
 			{isOpen && <hr />}
             
 			<ul className="sidebar_links">
+                <br />
 				<li className="link_flex"><Link to="/"><FaHome />{isOpen && <span className="sidebar_link">Home</span>}</Link></li>
-                
+                <br />
 
 				<li className="link_flex"><div className="sidebar_btn" type="button" onClick={showUsdc} ><FaPaperPlane />{isOpen && <span className="sidebar_link">Send USDC</span>}</div></li>
 				{isSend && (<SendTransaction closeUsdc={closeUsdc} />)}
-                
-				<li><Link to="/transactions"><FaExchangeAlt />{isOpen && <span className="sidebar_link">Transactions</span>}</Link></li>
-				<li className="link_flex"><Link to="/payment"><FaDollarSign />{isOpen && <span className="sidebar_link">Payment</span>}</Link></li>
-				<li className="link_flex"><Link to="/settings"><FaCog />{isOpen && <span className="sidebar_link">Settings</span>}</Link></li>
+                <br />
+				<li className="link_flex"><div className="sidebar_btn" type="button" onClick={showModal} ><FaLink />{isOpen && <span className="sidebar_link">Generate Link</span>}</div></li>
+                {isModal && (<PaymentLink closeModal={closeModal} />)}
+				<br />
                 
 				<li className="link_flex"><div className="sidebar_btn" type="button" onClick={ handleSignout }><FaSignOutAlt />{isOpen && <span className="sidebar_link">Sign out</span>}</div></li>
 			</ul>
@@ -183,7 +204,7 @@ function TotalTxn() {
 	const {invoiceStats, walletBalance} = useMerchant();
         return (
                 <div className="transactions">
-		    <h3>Your Activity</h3>
+		    <h1>Your Activity</h1>
 		    <div id="txn_boxes" className="clearfix">
 			<div className="usdc_box">
 				<img className="usdc_1" src={usdc} />
@@ -218,7 +239,7 @@ function TotalTxn() {
 			<br />
 		    </div><br />
 		    <br />			
-		    <button className="view_transactions">View Transactions <FaArrowRight /></button>
+		    
 		    <br /><br />
                 </div>
         );

@@ -281,13 +281,19 @@ html {
     color:grey;
 }
 
+#how {
+    margin:auto;
+    text-align:center;
+}
 #how-it-works, ._how {
     margin:1% 13%;
     color:grey;
 }
 #how-it-works {
-    color:rgb(51, 153, 102);
+    font-size: clamp(2rem, 5vh, 2.5rem);
+    color:black;
 }
+
 
 #landing_two {
     display:flex;
@@ -297,7 +303,7 @@ html {
 	border:1px solid none;
 	padding:3%;
 	/*text-align:center;*/
-	background:none;
+	background:rgb(242, 242, 242);
 }
 
 .landing_two_intro {
@@ -331,7 +337,9 @@ html {
 	border-bottom:4px solid BurlyWood;*/
     border:1px solid lightgrey;
 	border-radius:15px;
-	background:linear-gradient(to right, rgb(230, 255, 250), white);
+	/*background:linear-gradient(to right, rgb(230, 255, 250), white);*/
+    background:white;
+    box-shadow:0px 0px 15px 5px lightgrey;
     color:grey;
 }
 
@@ -417,7 +425,7 @@ html {
 	background:rgb(51, 153, 102);
 }
 .landing_closing {
-	background:rgb(30, 30, 0);
+    background:rgb(51, 153, 102);;
     margin:3%;
     border-radius:20px;
     border:3px solid none;	
@@ -426,10 +434,10 @@ html {
 }
 
 .landing_closing_b {
-	padding:10%;color:grey;
+	padding:10%;color:white;
 }
 .closing_text {
-    color:rgb(51, 153, 102);
+    color:white;
 }
 .jopay_img_div {
 	height:260px;
@@ -474,14 +482,16 @@ html {
     gap:1rem;
     background:white;
 	margin-left:15%;
-	height:auto;
+	height:50px;
 
 }
 
 .top_div {
 	border:1px solid none;
 	/*float:left;*/
-    flex:auto;
+    flex:1;
+    justify-content:center;
+    align-items:center;
     flex-direction:column;
 }
 
@@ -497,10 +507,14 @@ html {
 	position:relative;
 	padding:auto;
 	margin-top:2%;
+    align-items:center;
+    justify-content:center;
 }
 
 #notification_bell {
 	border:none;
+    margin:auto;
+    padding-top:2%;
 	background:white;
     font-size:clamp(1rem, 4vw, 1.5rem);
 }
@@ -564,7 +578,7 @@ html {
 	padding:2%;
 	font-weight:bold;
 	right:1px;
-	background:rgb(51, 153, 102);;
+	background:black;
 	border-radius:15px;
 	text-align:center;
     
@@ -573,6 +587,80 @@ html {
 #_wallet {
 	position:relative;
 }
+
+
+
+
+._wallet {
+    display:flex;
+    position :relative;
+    padding:1%;
+}
+.wallet_address {
+    color:dodgerblue;
+    overflow-wrap: break-word;
+}
+.wallet_dropdown {
+    border:1px solid lightgrey;
+
+    position:absolute;
+    background: white;
+    padding:5%;
+    color:grey;
+    margin-top:50px;
+
+    right:0;
+    width:220px;
+    display:none;
+    z-index:99;
+    /*transform: translateY(-15px);            visibility: hidden;
+      opacity: 0;*/
+    transition: opacity .3s ease, transform .3s ease, visibility .3s ease;
+}
+.wallet_dropdown.show_profile {
+    /*opacity: 1;
+    transform: translateY(0);
+    visibility: visible;*/
+    display:block;
+}
+.wallet_disconnect {
+    background:none;
+    border:none;
+    color:red;
+}
+#navbar_wallet {
+
+    background:black;
+    padding:10%;
+    border-radius:18px;
+    color:white;
+    height:38px;
+    text-align:center;
+}
+.drop_btn {
+    background:none;
+    border:none;
+    color:white;
+    font-weight:100;
+}
+.copy{
+    width:100%;
+    border-radius:12px;
+    background:lightgrey;
+    border:none;
+    padding:3%;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 /*#logo {
 	font-size:28px;
@@ -590,8 +678,7 @@ html {
 	margin:6% 5% 6% 15%;
 	padding:10%;
 	color:white;
-	
-	background:rgb(30, 30, 0);
+    background:rgb(30, 30, 0);
 	border-radius:15px;
 	/*text-align:center;*/
 }
@@ -734,6 +821,9 @@ html {
        
         width:50px;
     }
+    #dashboard_top_div {
+        height: 60px;
+    }
  
 }
 
@@ -754,14 +844,14 @@ a {
 	justify-content:center;
 	margin-left:15%;
 	margin-right: 5%;
-    background:linear-gradient(to bottom,
- rgb(230, 255, 250), white);
+    
 }
 #txn_boxes {
 	border:1px solid lightgrey;
-	border-radius:5px;
+	border-radius:12px;
 	padding:10px;
 	text-align:left;
+    background:rgb(242, 242, 242);
 	color:grey;
 	overflow:auto;
 }
@@ -774,11 +864,10 @@ a {
 	height:170px;
 	float:left;
 	padding:10px;
-	border-radius:5px;
+	border-radius:12px;
 	color:grey;
 	margin-bottom:20px;
-	background:linear-gradient(to bottom,
- rgb(230, 255, 250), white);
+	background:white;
 }
 
 .usdc_box {

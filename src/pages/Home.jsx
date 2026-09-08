@@ -106,9 +106,13 @@ function Home() {
 			        <br />
 				
 
-                    <h3 id="how-it-works"><u>How it works</u></h3>
-                    <p className="_how">Simple payments in four steps. Built for merchants</p>
-			        <div id="landing_two">
+                
+			    <div id="landing_two">
+                    <br />
+                    <div id="how"><h2 id="how-it-works">How it works</h2>
+                    <p className="_how"
+>Simple payments in four steps. Built f
+or merchants</p></div>
 				
 				        <div className="landing_feature"><div className="feature_img"><img className="feature_image" src={wallet} /></div><br /> <h3 className="heading_3 text_change_b">No Wallet Friction</h3><p className="feature_text">Get a wallet generated instantly, for non-crypto native.</p> </div>
                                 <div className="landing_feature"><div className="feature_img"><img className="feature_image" src={link} /></div><br /> <h3 className="heading_3 text_change_b">Payment Links.</h3><p className="feature_text"> Create a payment link in seconds and share it on WhatsApp.</p> 
@@ -127,11 +131,9 @@ function Home() {
                         <br />
                         
                     <div className="btn_flex flex_b"><button onClick ={() => navigate("/signup")} className="landing_bttn _demo">Generate Link </button><span className="btn_arrow"><FaArrowRight /></span></div>
-                    <br /><br />
+                    <br />
                     </div>
-                    <div className="jopay_img_div">
-                        <img src={image4} id="jopay_img" />
-                    </div>
+                    
                 </div>
                 <br />
 			    <Footer />
