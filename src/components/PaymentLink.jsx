@@ -1,14 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaLink, FaRegClone } from 'react-icons/fa';
 //import {createInvoice} from '../components/CreateInvoice.jsx'
 
 import {supabase} from '../lib/supabase.js';
 import { useMerchant } from '../auth/MerchantContext.jsx';
+import Footer from '../components/Footer.jsx';                                import Header from '../components/Header.jsx';
+import Sidelink from '../components/Sidelink.jsx';
 
-function PaymentLink({ closeModal }) {
+function PaymentLink({ closeModal, isOpen, toggle }) {
 	const {merchant} = useMerchant();
 	const [payLink, setPayLink] = useState("");
 	const [statusError, setStatusError] = useState("");
+    const [message, setMessage] = useState("");
 	const [formData, setFormData] = useState({
 		amount: "",
 		customer_name: "",
@@ -16,6 +20,7 @@ function PaymentLink({ closeModal }) {
 	});
 	const [isCopied, setIsCopied] = useState(false);
 
+    const navigate = useNavigate();
 	const handleForm = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -52,6 +57,8 @@ function PaymentLink({ closeModal }) {
 
 		setPayLink(
 			`${window.location.origin}/pay/${invoiceId}`);
+
+        setMessage("Payment link generated ✅");
 	}
 
 	const copyLink = async () => {
@@ -65,9 +72,14 @@ function PaymentLink({ closeModal }) {
 
 
 	return (
-		<div className= "modal_overlay">
-			<div className="modal_box">
-				<button onClick={closeModal} id="close_btn"> X </button>
+        <>        
+        <div className="dashboard_page">
+            <Sidelink isOpen={isOpen} toggle={toggle} />
+            <div className="dashboard_content">
+            <Header isOpen={isOpen} toggle={toggle} />
+		    <div className= "payment_link_div">
+            
+			<div className="payment_link_box">
 				
 				<h2>Get paid in USDC instantly</h2>
 				<h3>Create Payment Link</h3>
@@ -80,16 +92,25 @@ Amount (USDC)</label><br />
 					<input type="text" name="customer_name" placeholder="Enter Customer Name" value={formData.customer_name} onChange={handleForm} required /><br /><br />
 					<label> Description (Optional)</label><br />
 					<textarea name="description" type="text" placeholder="Decription" value={formData.description} onChange={handleForm} /><br />
-
+                    {message && <p className="form_success">{message}</p>}
 					{payLink && ( <div className="generated_link">
                                         <input type="text" value={payLink} readOnly />
                                         <button type="button" className="copy_link" onClick={ copyLink }>{isCopied ? "Copied!" : <FaRegClone />}</button>
                                 	</div>)}
+
+                    <br />
 					<button value="Generate Link" type="submit" id="gen_link_btn" disabled={!!payLink}>{payLink ? "Link Generated" : "Generate Link"} <FaLink /></button><br />
+                    <br />
 				</form>
 				
 			</div>
+            
 		</div>
+        
+        </div>
+        </div>
+        <Footer />
+        </>
 	);
 }
 

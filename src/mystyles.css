@@ -466,24 +466,25 @@ html {
     }
 }
 
-#dashboard_page {
+.dashboard_page {
     display:flex;
     gap:1rem;
     min-height:100vh;
 	border:1px solid none;
 	position:relative;
 }
-#dashboard_page > *{
+.dashboard_page > *{
     flex:1;
 }
 #dashboard_top_div {
-	border-bottom:1px solid grey;
+	border-bottom:rgb(242, 242, 242);;
     display:flex;
     gap:1rem;
     background:white;
-	margin-left:15%;
+	
 	height:50px;
-
+    justify-content: center;
+    align-items:center;
 }
 
 .top_div {
@@ -498,7 +499,7 @@ html {
 #logo_name {
 	/*width:40%;*/
 	text-align:center;
-	margin-top:2%;
+	margin-top:0%;
 }
 
 #notis {
@@ -506,7 +507,7 @@ html {
 	text-align:center;
 	position:relative;
 	padding:auto;
-	margin-top:2%;
+	margin-top:0%;
     align-items:center;
     justify-content:center;
 }
@@ -527,7 +528,7 @@ html {
 	right:0;
 	padding:5%;
 	z-index:99;
-	margin-top:80px;
+	margin-top:10%;
 	background:white;
 	
 	height: auto;
@@ -572,7 +573,7 @@ html {
 }
 
 #user_wallet {
-	margin-top:2%;
+	margin-top:0%;
 	/*width:40%;*/
 	color:white;
 	padding:2%;
@@ -675,7 +676,7 @@ html {
 
 #dashboard_body {
 	border:1px solid lightgrey;
-	margin:6% 5% 6% 15%;
+	margin:5%;
 	padding:10%;
 	color:white;
     background:rgb(30, 30, 0);
@@ -740,15 +741,22 @@ html {
     
 }
 
-.close {
+/*.close {
 	width: 12%;
 	border-right:1px solid none;
 	position:fixed;
 	height:100%;
 	padding-left:4%;
     z-index:9999;
+}*/
+.open {
+    width:70%;
+    padding-left:6%;
+    z-index: 99999;
 }
-
+.close {
+    display:none;
+}
 .floated {
 	position:absolute;
 	right:15px;
@@ -789,26 +797,46 @@ html {
     }
     .sidebar {
         position:sticky;
-        width:25%;
+        min-width:250px;
+        flex: 0 0 250px;
         overflow:visible;
         z-index:1;
+        min-height: 100vh;
+        background:rgb(242, 242, 242);
+        
     }
     .bttn_right {
         display:none;
     }
    
+    ._menu_bar {
+        display:none;
+    }
     .open {
         /*width: 50%;*/
         padding-left: 1%;
     }
-    #dashboard_page > * {
+    .dashboard_page {
+        display:flex;
+        width: 100%;
+        min-height: 100vh;
+       
+        align-items: stretch;
+    }
+   /* .dashboard_page > * {
         flex:auto;
+    }*/
+    .dashboard_content {
+        flex: 1 1 auto;
+        min-width: 0;
     }
     .open {
-        width:clamp(3rem, 8vw, 5rem);
+       /* width:clamp(3rem, 8vw, 5rem);*/
+        width:250px;
     }
-    #dashboard_body, #dashboard_top_div {
+    #dashboard_body {
         margin-left:2%;
+        
        
     }
     .logo_div {
@@ -842,8 +870,7 @@ a {
 }
 .transactions {
 	justify-content:center;
-	margin-left:15%;
-	margin-right: 5%;
+	margin:5%;
     
 }
 #txn_boxes {
@@ -969,6 +996,50 @@ a {
 	border:none;
 	background: none;
 	color:dodgerblue;
+}
+
+.payment_link_div, .send_usdc_page {
+    background: white;
+    padding:5%;
+}
+.payment_link_box, .send_box {
+    background: white;
+    border:1px solid lightgrey;
+    border-radius:15px;
+    padding:5%;
+}
+.payment_link_box input, .payment_link_box textarea, .send_box input {
+    background:rgb(242, 242, 242);
+    border-radius:15px;
+    border:1px solid rgb(242, 242, 242);
+    padding:2%;
+}
+.usdc_flex {
+    display:flex;
+    border:1px solid grey;
+    background:lightgrey;
+    border-radius:15px;
+    padding:1px;
+    flex:1;
+    height:30px;
+}
+.usdc_img {
+    width:20%;
+}
+
+.transaction_page {
+    padding:5%;
+}
+.invoice_flex {
+    border:1px solid lightgrey;
+    border-radius:15px;
+    padding:5%;
+    display:flex;
+    flex:1;
+}
+.invoice_item{
+    display:flex;
+    flex:1
 }
 
 #close_btn {
@@ -1104,9 +1175,9 @@ hr {
 	font-weight:bold;
 }
 
-.sign_up_btn, .sign_in_btn, #pay_btn, #gen_link_btn {
+.sign_up_btn, .view_all_invoice, .sign_in_btn, #send_usdc_btn, #pay_btn, #gen_link_btn {
 	border:none;
-	background:rgb(51, 153, 102);
+	background:black;
 	border-radius:10px;
 	width:100%;
 	padding:5%;
@@ -1114,6 +1185,15 @@ hr {
 	font-weight:bold;
 }
 
+@media screen and (min-width: 860px) {
+    #gen-link {
+        height:40px;
+        padding:2%;
+        width:60%;
+    }                                  }
+.form_success {
+    color:green;
+}
 #pay_btn:disabled, #gen_link_btn:disabled{
 	background-color:grey;
 	cursor:not-allowed;
@@ -1215,13 +1295,13 @@ hr {
 	margin:0% 10% 0% 10%;
 }
 
-#send_usdc_btn {
+/*#send_usdc_btn {
 	border:none;
 	background:rgb(51, 153, 102);
 	padding:4%;
 	color:white;
 	font-weight:bold;
-}
+}*/
 .send_status {
 	font-weight: 600;
 	margin-top: 10px;

@@ -105,15 +105,13 @@ function Home() {
 			        </div>
 			        <br />
 				
-
-                
-			    <div id="landing_two">
-                    <br />
-                    <div id="how"><h2 id="how-it-works">How it works</h2>
+                <br />
+              <div id="how"><h2 id="how-it-works">How it works</h2>
                     <p className="_how"
 >Simple payments in four steps. Built f
 or merchants</p></div>
-				
+                
+			    <div id="landing_two">
 				        <div className="landing_feature"><div className="feature_img"><img className="feature_image" src={wallet} /></div><br /> <h3 className="heading_3 text_change_b">No Wallet Friction</h3><p className="feature_text">Get a wallet generated instantly, for non-crypto native.</p> </div>
                                 <div className="landing_feature"><div className="feature_img"><img className="feature_image" src={link} /></div><br /> <h3 className="heading_3 text_change_b">Payment Links.</h3><p className="feature_text"> Create a payment link in seconds and share it on WhatsApp.</p> 
 </div>

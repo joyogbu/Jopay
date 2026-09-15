@@ -1,10 +1,15 @@
 import { useState } from 'react';
 import { isAddress } from "viem";
 import { FaLink } from 'react-icons/fa';
+import { FaDollarSign } from "react-icons/fa"
 import { W3SSdk } from "@circle-fin/w3s-pw-web-sdk";
 import { supabase } from '../lib/supabase.js';
 import { MerchantProvider, useMerchant } from '../auth/MerchantContext.jsx';
-function SendTransaction({ closeUsdc }) {
+import Footer from '../components/Footer.jsx';                                import Header from '../components/Header.jsx';
+import Sidelink from '../components/Sidelink.jsx';
+import usdc from '../images/usdc1.png';
+
+function SendTransaction({ closeUsdc, isOpen, toggle }) {
 
     const sdk = new W3SSdk({
 	appSettings: {
@@ -156,18 +161,34 @@ function SendTransaction({ closeUsdc }) {
     }
 
     return (
-        <div className="modal_overlay">
-            <div className="modal_box">
+        <>
+        <div className="dashboard_page">
+            <Sidelink isOpen={isOpen} toggle={toggle} />
 
-	    <button type="button" onClick={closeUsdc}>X</button>
-                <h3>{trimAddress}</h3>
-	        <h1>{Number(walletBalance).toFixed(2) ?? "0"} USDC</h1>
+            <div className="dashboard_content">
+            <Header isOpen={isOpen} toggle={toggle} />
+        
+            <div className="send_usdc_page">
+            <div className="send_box">
+                
+                <h2>Send USDC</h2>
 
                 <form onSubmit={sendUsdc}>
 	    	    <p className={`send_status ${sendStatusType}`}>{sendStatus}</p>
 	    	    {txHash && <a href={`https://testnet.arcscan.app/tx/${txHash}`} target="_blank" >View Transaction</a>}
 	    	    <br />
-                    <label>Send To:</label>
+
+                <br />
+                <label>Amount (USDC)</label>
+                 <br />
+                 <br />
+
+                 <input name="send_amount" placeholder="0" value={usdcformData.send_amount} type="number" min="0" step="0.01" onChange={handleTransaction} required />
+                <small><i>Available balance: {Number(walletBalance).toFixed(2) ?? "0"} USDC</i></small>
+
+                <br /><br />
+
+                 <label>Send To:</label>
                     <br />
 		    <br />
 
@@ -180,24 +201,7 @@ function SendTransaction({ closeUsdc }) {
                         required
                     />
 
-                    <br />
-	    	    <br />
-
-                    <label>Amount (USDC)</label>
-	    	    <br />
-                    <br />
-
-                    <input
-                        name="send_amount"
-                        placeholder="0"
-                        value={usdcformData.send_amount}
-                        type="number"
-                        min="0"
-                        step="0.01"
-                        onChange={handleTransaction}
-                        required
-                    />
-
+                    
                     <br />
                     <br />
 
@@ -215,6 +219,11 @@ function SendTransaction({ closeUsdc }) {
                 </form>
             </div>
         </div>
+        
+        </div>
+        </div>
+        <Footer />
+        </>
     );
 }
 
